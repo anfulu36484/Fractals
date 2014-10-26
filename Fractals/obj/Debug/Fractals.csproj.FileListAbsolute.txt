@@ -1,6 +1,14 @@
+D:\С_2013\Fractals\Fractals\Fractals\bin\Debug\Fractals.exe.config
 D:\С_2013\Fractals\Fractals\bin\Debug\Fractals.exe.config
 D:\С_2013\Fractals\Fractals\bin\Debug\Fractals.exe
 D:\С_2013\Fractals\Fractals\bin\Debug\Fractals.pdb
 D:\С_2013\Fractals\Fractals\obj\Debug\Fractals.csprojResolveAssemblyReference.cache
+D:\С_2013\Fractals\Fractals\obj\Debug\MainWindow.baml
+D:\С_2013\Fractals\Fractals\obj\Debug\MainWindow.g.cs
+D:\С_2013\Fractals\Fractals\obj\Debug\App.g.cs
+D:\С_2013\Fractals\Fractals\obj\Debug\Fractals_MarkupCompile.cache
+D:\С_2013\Fractals\Fractals\obj\Debug\Fractals.g.resources
+D:\С_2013\Fractals\Fractals\obj\Debug\Fractals.Properties.Resources.resources
+D:\С_2013\Fractals\Fractals\obj\Debug\Fractals.csproj.GenerateResource.Cache
 D:\С_2013\Fractals\Fractals\obj\Debug\Fractals.exe
 D:\С_2013\Fractals\Fractals\obj\Debug\Fractals.pdb

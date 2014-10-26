@@ -6,12 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Fractals
 {
     class BMPGenerator
     {
 
         private Bitmap _image;
+        public Bitmap ImageBitmap
+        {
+            get { return _image; }
+        }
         public void CreateBMPImage(bool[,] field)
         {
              _image= new Bitmap(field.GetLength(0),field.GetLength(1));
@@ -20,12 +25,14 @@ namespace Fractals
                 for (int y = 0; y < field.GetLength(1); y++)
                 {
                     if(field[x,y])
-                        _image.SetPixel(x, y, Color.Black);
+                        _image.SetPixel(x, y, Color.Red);
                     else
                         _image.SetPixel(x, y, Color.White);
                 }
             }
         }
+
+
 
         public void SaveImage()
         {
