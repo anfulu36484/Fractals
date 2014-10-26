@@ -2,7 +2,6 @@ D:\С_2013\Fractals\Fractals\Fractals\bin\Debug\Fractals.exe.config
 D:\С_2013\Fractals\Fractals\bin\Debug\Fractals.exe.config
 D:\С_2013\Fractals\Fractals\bin\Debug\Fractals.exe
 D:\С_2013\Fractals\Fractals\bin\Debug\Fractals.pdb
-D:\С_2013\Fractals\Fractals\obj\Debug\Fractals.csprojResolveAssemblyReference.cache
 D:\С_2013\Fractals\Fractals\obj\Debug\MainWindow.baml
 D:\С_2013\Fractals\Fractals\obj\Debug\MainWindow.g.cs
 D:\С_2013\Fractals\Fractals\obj\Debug\App.g.cs

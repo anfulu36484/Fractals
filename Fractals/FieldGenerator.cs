@@ -32,9 +32,9 @@ namespace Fractals
             }
         }
 
-        void GenerateInitialPoint(int x, int y)
+        void GenerateInitialPoint(Vector p)
         {
-            _field[y, x] = true;
+            _field[p.y, p.x] = true;
         }
 
 
@@ -42,18 +42,18 @@ namespace Fractals
         /// Получить координаты всех ячеек в диапазоне от n-1 до n+1 кроме точки {n, n}
         /// Коордианаты x y задают точку {n, n}
         /// </summary>
-        int[,] GetCoordinatеsAllTheCells(int x, int y)
+        int[,] GetCoordinatеsAllTheCells(Vector p)
         {
             return new int[,]
             {
-                {y - 1, x - 1},
-                {y-1, x},
-                {y-1, x+1},
-                {y, x+1},
-                {y+1,x+1},
-                {y+1, x},
-                {y+1,x-1},
-                {y,x-1}
+                {p.y - 1, p.x - 1},
+                {p.y-1, p.x},
+                {p.y-1, p.x+1},
+                {p.y, p.x+1},
+                {p.y+1,p.x+1},
+                {p.y+1, p.x},
+                {p.y+1,p.x-1},
+                {p.y,p.x-1}
             };
         }
 
@@ -88,36 +88,54 @@ namespace Fractals
             return coordinates.Count == 0;
         }
 
+
+        class Vector
+        {
+            public int x, y;
+            public Vector(int x, int y)
+            {
+                this.x = x;
+                this.y = y;
+            }
+
+            public Vector(int[] coordinates)
+            {
+                x = coordinates[1];
+                y = coordinates[0];
+            }
+        }
+
         /// <summary>
         /// Определить случайную точку роста
         /// </summary>
-        int[] DetermineGrowthPoint(List<int[]> coordinates)
+        Vector DetermineGrowthPoint(List<int[]> coordinates)
         {
-            return coordinates[_random.Next(coordinates.Count-1)];
+            return new Vector(coordinates[_random.Next(coordinates.Count - 1)]);
         }
 
 
-        int[] GenerateNextPoint(int x, int y)
+        Vector GenerateNextPoint(Vector p)
         {
-            int[,] coordinatеs = GetCoordinatеsAllTheCells(x, y);//Координаты всех ячеек в окрестности заданной точки
+            int[,] coordinatеs = GetCoordinatеsAllTheCells(p);//Координаты всех ячеек в окрестности заданной точки
             List<int[]> filteredСoordinates = FilterСoordinates(coordinatеs);
             if (CheckingConditionStoppingGrowth(filteredСoordinates))
                 return null;
-            int[] NextPoint = DetermineGrowthPoint(filteredСoordinates);
-            _field[NextPoint[0], NextPoint[1]] = true;
+            Vector NextPoint = DetermineGrowthPoint(filteredСoordinates);
+            _field[NextPoint.y, NextPoint.x] = true;
             return NextPoint;
         }
 
         public bool[,] GenerateFractals()
         {
             //Координаты начальной точки
-            int [] Point = {_dimensionField/2, _dimensionField/2};
+            
+            Vector Point = new Vector(_dimensionField/2, _dimensionField/2);
 
             GenerateVoidField();
-            GenerateInitialPoint(Point[0], Point[1]);
+            GenerateInitialPoint(Point);
             do
             {
-                Point = GenerateNextPoint(Point[0], Point[1]);
+                Point = GenerateNextPoint(Point);
 
             } while (Point!=null);
 
@@ -128,17 +146,19 @@ namespace Fractals
         public void GenerateFractals(GetResult getField)
         {
             //Координаты начальной точки
-            int[] Point = { _dimensionField / 2, _dimensionField / 2 };
+            Vector Point = new Vector(_dimensionField/2, _dimensionField/2);
 
             GenerateVoidField();
-            GenerateInitialPoint(Point[0], Point[1]);
+            GenerateInitialPoint(Point);
             do
             {
-                Point = GenerateNextPoint(Point[0], Point[1]);
+                Point = GenerateNextPoint(Point);
                 getField(_field);
 
             } while (Point != null);
         }
 
     }
+
+
 }
