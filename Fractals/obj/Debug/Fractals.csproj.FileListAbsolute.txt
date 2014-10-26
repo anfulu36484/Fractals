@@ -1,0 +1,6 @@
+D:\С_2013\Fractals\Fractals\bin\Debug\Fractals.exe.config
+D:\С_2013\Fractals\Fractals\bin\Debug\Fractals.exe
+D:\С_2013\Fractals\Fractals\bin\Debug\Fractals.pdb
+D:\С_2013\Fractals\Fractals\obj\Debug\Fractals.csprojResolveAssemblyReference.cache
+D:\С_2013\Fractals\Fractals\obj\Debug\Fractals.exe
+D:\С_2013\Fractals\Fractals\obj\Debug\Fractals.pdb
