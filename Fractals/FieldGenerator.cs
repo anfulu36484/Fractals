@@ -125,5 +125,20 @@ namespace Fractals
 
         }
 
+        public void GenerateFractals(GetResult getField)
+        {
+            //Координаты начальной точки
+            int[] Point = { _dimensionField / 2, _dimensionField / 2 };
+
+            GenerateVoidField();
+            GenerateInitialPoint(Point[0], Point[1]);
+            do
+            {
+                Point = GenerateNextPoint(Point[0], Point[1]);
+                getField(_field);
+
+            } while (Point != null);
+        }
+
     }
 }

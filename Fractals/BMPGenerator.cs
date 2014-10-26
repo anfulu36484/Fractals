@@ -25,7 +25,7 @@ namespace Fractals
                 for (int y = 0; y < field.GetLength(1); y++)
                 {
                     if(field[x,y])
-                        _image.SetPixel(x, y, Color.Red);
+                        _image.SetPixel(x, y, Color.Black);
                     else
                         _image.SetPixel(x, y, Color.White);
                 }
