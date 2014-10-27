@@ -7,7 +7,7 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
-        <Image Name="ImageField"  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"  VerticalAlignment="Top"  />
+        <Image Name="ImageField"  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"  VerticalAlignment="Top" RenderOptions.BitmapScalingMode="NearestNeighbor" />
         <Button  Grid.Row="1" Grid.Column="0" Content="Запуск" HorizontalAlignment="Center" VerticalAlignment="Top" Width="75" 
                  Margin="0,4,0,0" Click="Button_Click"    />
 

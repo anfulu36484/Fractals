@@ -42,18 +42,18 @@ namespace Fractals
         /// Получить координаты всех ячеек в диапазоне от n-1 до n+1 кроме точки {n, n}
         /// Коордианаты x y задают точку {n, n}
         /// </summary>
-        int[,] GetCoordinatеsAllTheCells(Vector p)
+        List<Vector> GetCoordinatеsAllTheCells(Vector p)
         {
-            return new int[,]
+            return new List<Vector>
             {
-                {p.y - 1, p.x - 1},
-                {p.y-1, p.x},
-                {p.y-1, p.x+1},
-                {p.y, p.x+1},
-                {p.y+1,p.x+1},
-                {p.y+1, p.x},
-                {p.y+1,p.x-1},
-                {p.y,p.x-1}
+                new Vector(p.y - 1, p.x - 1),
+                new Vector(p.y - 1, p.x),
+                new Vector(p.y - 1, p.x + 1),
+                new Vector(p.y, p.x + 1),
+                new Vector(p.y + 1, p.x + 1),
+                new Vector(p.y + 1, p.x),
+                new Vector(p.y + 1, p.x - 1),
+                new Vector(p.y, p.x - 1)
             };
         }
 
@@ -61,18 +61,18 @@ namespace Fractals
         /// Получить только те координаты в окрестности точки {n, n}, которые не соответсвуют другим точкам
         /// со значением true
         /// </summary>
-        List<int[]> FilterСoordinates(int[,] coordinates)
+        List<Vector> FilterСoordinates(List<Vector> inputList )
         {
-            List<int[]> list = new List<int[]>(coordinates.GetLength(0));
-            for (int i = 0; i < coordinates.GetLength(0); i++)
+            List<Vector>  list = new List<Vector>(inputList.Count);
+            for (int i = 0; i < inputList.Count; i++)
             {
                 //Координаты, лежащие за пределами поля отфильтровываются
-                if (coordinates[i, 0] < 0 || coordinates[i, 1]<0
-                    || coordinates[i, 0] > _dimensionField - 1 || coordinates[i, 1] > _dimensionField - 1)
+                if (inputList[i].y < 0 || inputList[i].x <0
+                    || inputList[i].y > _dimensionField - 1 || inputList[i].x > _dimensionField - 1)
                     continue;
 
-                if (!_field[coordinates[i,0],coordinates[i,1]])
-                    list.Add(new int[] { coordinates[i, 0], coordinates[i, 1] });
+                if (!_field[inputList[i].y,inputList[i].x])
+                    list.Add(inputList[i]);
             }
             return list;
         }
@@ -83,7 +83,7 @@ namespace Fractals
         /// </summary>
         /// <param name="coordinates"></param>
         /// <returns></returns>
-        bool CheckingConditionStoppingGrowth(List<int[]> coordinates)
+        bool CheckingConditionStoppingGrowth(List<Vector> coordinates)
         {
             return coordinates.Count == 0;
         }
@@ -92,32 +92,27 @@ namespace Fractals
         class Vector
         {
             public int x, y;
-            public Vector(int x, int y)
+            public Vector(int y, int x)
             {
                 this.x = x;
                 this.y = y;
             }
 
-            public Vector(int[] coordinates)
-            {
-                x = coordinates[1];
-                y = coordinates[0];
-            }
         }
 
         /// <summary>
         /// Определить случайную точку роста
         /// </summary>
-        Vector DetermineGrowthPoint(List<int[]> coordinates)
+        Vector DetermineGrowthPoint(List<Vector> coordinates)
         {
-            return new Vector(coordinates[_random.Next(coordinates.Count - 1)]);
+            return coordinates[_random.Next(coordinates.Count - 1)];
         }
 
 
         Vector GenerateNextPoint(Vector p)
         {
-            int[,] coordinatеs = GetCoordinatеsAllTheCells(p);//Координаты всех ячеек в окрестности заданной точки
-            List<int[]> filteredСoordinates = FilterСoordinates(coordinatеs);
+            List<Vector> coordinatеs = GetCoordinatеsAllTheCells(p);//Координаты всех ячеек в окрестности заданной точки
+            List<Vector> filteredСoordinates = FilterСoordinates(coordinatеs);
             if (CheckingConditionStoppingGrowth(filteredСoordinates))
                 return null;
             Vector NextPoint = DetermineGrowthPoint(filteredСoordinates);
