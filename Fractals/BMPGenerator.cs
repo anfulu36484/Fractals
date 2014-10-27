@@ -17,17 +17,14 @@ namespace Fractals
         {
             get { return _image; }
         }
-        public void CreateBMPImage(bool[,] field)
+        public void CreateBMPImage(Color[,] field)
         {
              _image= new Bitmap(field.GetLength(0),field.GetLength(1));
             for (int x = 0; x < field.GetLength(0); x++)
             {
                 for (int y = 0; y < field.GetLength(1); y++)
                 {
-                    if(field[x,y])
-                        _image.SetPixel(x, y, Color.Black);
-                    else
-                        _image.SetPixel(x, y, Color.White);
+                    _image.SetPixel(x, y, field[x, y]);
                 }
             }
         }

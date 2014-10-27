@@ -23,7 +23,7 @@ using System.Windows.Shapes;
 namespace Fractals
 {
 
-    public delegate void GetResult(bool[,] field);
+    public delegate void GetResult(System.Drawing.Color[,] field);
 
 
     /// <summary>
@@ -65,7 +65,7 @@ namespace Fractals
         void Run1()
         {
             FieldGenerator fieldGenerator = new FieldGenerator(300);
-            bool[,] field = fieldGenerator.GenerateFractals();
+            System.Drawing.Color[,] field = fieldGenerator.GenerateFractals();
             BMPGenerator bmpGenerator = new BMPGenerator();
             bmpGenerator.CreateBMPImage(field);
  
@@ -74,7 +74,7 @@ namespace Fractals
         }
 
 
-        void GetResultHandler(bool[,] field)
+        void GetResultHandler(System.Drawing.Color[,] field)
         {
             BMPGenerator bmpGenerator = new BMPGenerator();
             bmpGenerator.CreateBMPImage(field);

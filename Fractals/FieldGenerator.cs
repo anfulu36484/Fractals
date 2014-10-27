@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
@@ -10,7 +11,7 @@ namespace Fractals
 {
     class FieldGenerator
     {
-        private bool[,] _field;
+        private Color[,] _field;
         private int _dimensionField;
         private Random _random;
 
@@ -22,19 +23,19 @@ namespace Fractals
 
         void GenerateVoidField()
         {
-            _field = new bool[_dimensionField,_dimensionField];
+            _field = new Color[_dimensionField,_dimensionField];
             for (int i = 0; i < _dimensionField; i++)
             {
                 for (int j = 0; j < _dimensionField; j++)
                 {
-                    _field[i, j] = false;
+                    _field[i, j] = Color.White;
                 }
             }
         }
 
         void GenerateInitialPoint(Vector p)
         {
-            _field[p.y, p.x] = true;
+            _field[p.y, p.x] = Color.FromArgb(1,1,1);
         }
 
 
@@ -71,7 +72,7 @@ namespace Fractals
                     || inputList[i].y > _dimensionField - 1 || inputList[i].x > _dimensionField - 1)
                     continue;
 
-                if (!_field[inputList[i].y,inputList[i].x])
+                if (_field[inputList[i].y,inputList[i].x]==Color.White)
                     list.Add(inputList[i]);
             }
             return list;
@@ -116,11 +117,11 @@ namespace Fractals
             if (CheckingConditionStoppingGrowth(filteredСoordinates))
                 return null;
             Vector NextPoint = DetermineGrowthPoint(filteredСoordinates);
-            _field[NextPoint.y, NextPoint.x] = true;
+            _field[NextPoint.y, NextPoint.x] = Color.FromArgb(1, 1, 1); 
             return NextPoint;
         }
 
-        public bool[,] GenerateFractals()
+        public Color[,] GenerateFractals()
         {
             //Координаты начальной точки
             
