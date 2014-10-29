@@ -65,7 +65,7 @@ namespace Fractals
         void Run1()
         {
             FieldGenerator fieldGenerator = new FieldGenerator(300);
-            System.Drawing.Color[,] field = fieldGenerator.GenerateFractals();
+            System.Drawing.Color[,] field = fieldGenerator.Generate();
             BMPGenerator bmpGenerator = new BMPGenerator();
             bmpGenerator.CreateBMPImage(field);
  
@@ -87,7 +87,7 @@ namespace Fractals
         void Run2()
         {
             FieldGenerator fieldGenerator = new FieldGenerator(300);
-            fieldGenerator.GenerateFractals(GetResultHandler);
+            fieldGenerator.Generate(GetResultHandler);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
