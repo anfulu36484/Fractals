@@ -83,7 +83,7 @@ namespace Fractals
         /// </summary>
         Vector DetermineGrowthPoint(List<Vector> coordinates)
         {
-            return coordinates[_fieldGenerator.Rand.Next(coordinates.Count - 1)];
+            return coordinates[_fieldGenerator.Rand.Next(coordinates.Count)];
         }
 
         public void GenerateNextPoint()

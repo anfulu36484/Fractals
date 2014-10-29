@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Fractals
 {
@@ -29,7 +30,10 @@ namespace Fractals
                            Color.FromArgb(1,10,250)),
                 new Fractal(_fieldGenerator,
                             new Vector(_fieldGenerator.DimensionField/3,_fieldGenerator.DimensionField/4),
-                            Color.FromArgb(100,10,10))
+                            Color.FromArgb(100,10,10)),
+                new Fractal(_fieldGenerator,
+                            new Vector(_fieldGenerator.DimensionField/4,_fieldGenerator.DimensionField/4),
+                            Color.FromArgb(10,100,10))
             };
         }
 
@@ -45,7 +49,9 @@ namespace Fractals
 
         public bool WhetherThereAreLivingFractals()
         {
-            return !_fractals.Any(n => n.Dead);
+            _fractals.ForEach(n=>Debug.Write(n.Dead+"   "));
+            Debug.Write("\n");
+            return !_fractals.All(fractal => fractal.Dead);
         }
     }
 }
