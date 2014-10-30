@@ -27,7 +27,6 @@ namespace Fractals
         public void ShowStatistics()
         {
             _mainWindow.Dispatcher.Invoke(DispatcherPriority.Background,
-
                 new DispatcherOperationCallback(delegate
                 {
                     int liveFractals=0, deadFractals=0;

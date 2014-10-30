@@ -23,29 +23,18 @@ namespace Fractals
         }
 
 
+        private int _initialCountOfFractals = 3000;
+
         public void GenerateInitialFractals()
         {
-            _fractals = new List<Fractal>
-            {
-                new Fractal(_fieldGenerator,
-                            new Vector(_fieldGenerator.DimensionField/2,_fieldGenerator.DimensionField/2),
-                           Color.FromArgb(1,10,250)),
-                new Fractal(_fieldGenerator,
-                            new Vector(_fieldGenerator.DimensionField/3,_fieldGenerator.DimensionField/4),
-                            Color.FromArgb(100,10,10)),
-                new Fractal(_fieldGenerator,
-                            new Vector(_fieldGenerator.DimensionField/4,_fieldGenerator.DimensionField/4),
-                            Color.FromArgb(10,100,10)),
-                new Fractal(_fieldGenerator,
-                            new Vector(_fieldGenerator.DimensionField/2,_fieldGenerator.DimensionField/3),
-                           Color.FromArgb(1,10,100)),
-                new Fractal(_fieldGenerator,
-                            new Vector(_fieldGenerator.DimensionField/5,_fieldGenerator.DimensionField/4),
-                            Color.FromArgb(100,100,10)),
-                new Fractal(_fieldGenerator,
-                            new Vector(_fieldGenerator.DimensionField/3,_fieldGenerator.DimensionField/4),
-                            Color.FromArgb(100,10,100))
-            };
+            _fractals = Enumerable.Range(0, _initialCountOfFractals)
+                .Select(n => new Fractal(_fieldGenerator,
+                                        new Vector(_fieldGenerator.Rand.Next(_fieldGenerator.DimensionField),
+                                             _fieldGenerator.Rand.Next(_fieldGenerator.DimensionField)),
+                                        Color.FromArgb(_fieldGenerator.Rand.Next(255), _fieldGenerator.Rand.Next(255),
+                                             _fieldGenerator.Rand.Next(255))))
+                 .ToList();
+
         }
 
         public void GenerateInitialPoints()
