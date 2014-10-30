@@ -14,6 +14,9 @@ namespace Fractals
         private Color[,] _field;
         private int _dimensionField;
         private Random _random;
+        private FractalPopulation _fractalPopulation;
+
+        public FractalPopulation FractalPopulation { get { return _fractalPopulation; } }
 
         public Color[,] Field { get { return _field; } }
         public int DimensionField { get { return _dimensionField; } }
@@ -41,16 +44,16 @@ namespace Fractals
 
         public Color[,] Generate()
         {
-            FractalPopulation fractalPopulation = new FractalPopulation(this);
-            fractalPopulation.GenerateInitialFractals();
+            _fractalPopulation = new FractalPopulation(this);
+            _fractalPopulation.GenerateInitialFractals();
             GenerateVoidField();
-            fractalPopulation.GenerateInitialPoints();
+            _fractalPopulation.GenerateInitialPoints();
 
             do
             {
-                fractalPopulation.GenerateNextPoints();
+                _fractalPopulation.GenerateNextPoints();
 
-            } while (fractalPopulation.WhetherThereAreLivingFractals());
+            } while (_fractalPopulation.WhetherThereAreLivingFractals());
 
             return _field;
 
@@ -58,17 +61,17 @@ namespace Fractals
 
         public void Generate(GetResult getField)
         {
-            FractalPopulation fractalPopulation = new FractalPopulation(this);
-            fractalPopulation.GenerateInitialFractals();
+            _fractalPopulation = new FractalPopulation(this);
+            _fractalPopulation.GenerateInitialFractals();
             GenerateVoidField();
-            fractalPopulation.GenerateInitialPoints();
+            _fractalPopulation.GenerateInitialPoints();
 
             do
             {
-                fractalPopulation.GenerateNextPoints();
+                _fractalPopulation.GenerateNextPoints();
                 getField(_field);
 
-            } while (fractalPopulation.WhetherThereAreLivingFractals());
+            } while (_fractalPopulation.WhetherThereAreLivingFractals());
         }
 
     }

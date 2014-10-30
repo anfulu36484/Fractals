@@ -2,14 +2,26 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
+    <Grid Name="GridBase">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
         </Grid.RowDefinitions>
         <Image Name="ImageField"  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"  VerticalAlignment="Top" RenderOptions.BitmapScalingMode="NearestNeighbor" />
-        <Button  Grid.Row="1" Grid.Column="0" Content="Запуск" HorizontalAlignment="Center" VerticalAlignment="Top" Width="75" 
-                 Margin="0,4,0,0" Click="Button_Click"    />
+
+
+        
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+            <StackPanel Orientation="Vertical" Width="300">
+                <Label Name="LiveFractalLabel">Число живых цепей  :</Label>
+                <Label Name="DeadFractalLabel">Число мертвых цепей:</Label>
+            </StackPanel>
+           <Button   Content="Запуск"  VerticalAlignment="Center" Width="75" 
+                 Margin="0,0,10,0" Click="Button_Click"    /> 
+           
+        </StackPanel>
+        
+        
 
     </Grid>
 </Window>

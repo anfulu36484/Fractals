@@ -31,9 +31,17 @@ namespace Fractals
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private BMPGenerator _bmpGenerator;
+        private Statistics _statistics;
+        private FieldGenerator _fieldGenerator;
+
         public MainWindow()
         {
             InitializeComponent();
+            _bmpGenerator = new BMPGenerator();
+            _fieldGenerator = new FieldGenerator(300);
+            _statistics = new Statistics(_fieldGenerator,this);
         }
 
 
@@ -64,30 +72,28 @@ namespace Fractals
 
         void Run1()
         {
-            FieldGenerator fieldGenerator = new FieldGenerator(300);
-            System.Drawing.Color[,] field = fieldGenerator.Generate();
-            BMPGenerator bmpGenerator = new BMPGenerator();
-            bmpGenerator.CreateBMPImage(field);
- 
-            Bitmap bitmap = bmpGenerator.ImageBitmap;
+            System.Drawing.Color[,] field = _fieldGenerator.Generate();
+            _bmpGenerator.CreateBMPImage(field);
+
+            Bitmap bitmap = _bmpGenerator.ImageBitmap;
             DrawImage(bitmap);
         }
 
 
         void GetResultHandler(System.Drawing.Color[,] field)
         {
-            BMPGenerator bmpGenerator = new BMPGenerator();
-            bmpGenerator.CreateBMPImage(field);
 
-            Bitmap bitmap = bmpGenerator.ImageBitmap;
+            _bmpGenerator.CreateBMPImage(field);
+
+            Bitmap bitmap = _bmpGenerator.ImageBitmap;
             DrawImage(bitmap);
-            Thread.Sleep(50);
+            _statistics.ShowStatistics();
+            Thread.Sleep(5);
         }
 
         void Run2()
         {
-            FieldGenerator fieldGenerator = new FieldGenerator(300);
-            fieldGenerator.Generate(GetResultHandler);
+            _fieldGenerator.Generate(GetResultHandler);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -11,7 +11,9 @@ namespace Fractals
     class FractalPopulation
     {
 
-        List<Fractal> _fractals = new List<Fractal>(); 
+        List<Fractal> _fractals = new List<Fractal>();
+
+        public List<Fractal> Fractals { get { return _fractals; } } 
 
         private FieldGenerator _fieldGenerator;
 
@@ -33,7 +35,16 @@ namespace Fractals
                             Color.FromArgb(100,10,10)),
                 new Fractal(_fieldGenerator,
                             new Vector(_fieldGenerator.DimensionField/4,_fieldGenerator.DimensionField/4),
-                            Color.FromArgb(10,100,10))
+                            Color.FromArgb(10,100,10)),
+                new Fractal(_fieldGenerator,
+                            new Vector(_fieldGenerator.DimensionField/2,_fieldGenerator.DimensionField/3),
+                           Color.FromArgb(1,10,100)),
+                new Fractal(_fieldGenerator,
+                            new Vector(_fieldGenerator.DimensionField/5,_fieldGenerator.DimensionField/4),
+                            Color.FromArgb(100,100,10)),
+                new Fractal(_fieldGenerator,
+                            new Vector(_fieldGenerator.DimensionField/3,_fieldGenerator.DimensionField/4),
+                            Color.FromArgb(100,10,100))
             };
         }
 
@@ -49,8 +60,6 @@ namespace Fractals
 
         public bool WhetherThereAreLivingFractals()
         {
-            _fractals.ForEach(n=>Debug.Write(n.Dead+"   "));
-            Debug.Write("\n");
             return !_fractals.All(fractal => fractal.Dead);
         }
     }
