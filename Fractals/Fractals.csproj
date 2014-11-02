@@ -54,7 +54,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DrawFractal\DeterminantOfGrowthPoints.cs" />
+    <Compile Include="DrawFractal\StateOfFractal.cs" />
     <Compile Include="FractalPopulation.cs" />
+    <Compile Include="DrawFractal\PainterPoints.cs" />
     <Compile Include="Statistics.cs" />
     <Compile Include="Vector.cs" />
     <Page Include="MainWindow.xaml">
@@ -67,7 +70,7 @@
     </Compile>
     <Compile Include="BMPGenerator.cs" />
     <Compile Include="FieldGenerator.cs" />
-    <Compile Include="Fractal.cs" />
+    <Compile Include="DrawFractal\Fractal.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

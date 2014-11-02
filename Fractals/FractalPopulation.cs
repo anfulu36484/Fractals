@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Fractals.DrawFractal;
 
 namespace Fractals
 {
@@ -23,7 +24,7 @@ namespace Fractals
         }
 
 
-        private int _initialCountOfFractals = 3000;
+        private int _initialCountOfFractals = 1000;
 
         public void GenerateInitialFractals()
         {
@@ -49,7 +50,7 @@ namespace Fractals
 
         public bool WhetherThereAreLivingFractals()
         {
-            return !_fractals.All(fractal => fractal.Dead);
+            return !_fractals.All(fractal => fractal.StateOfFractal);
         }
     }
 }

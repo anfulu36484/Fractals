@@ -88,7 +88,7 @@ namespace Fractals
             Bitmap bitmap = _bmpGenerator.ImageBitmap;
             DrawImage(bitmap);
             _statistics.ShowStatistics();
-            Thread.Sleep(5);
+            //Thread.Sleep(100);
         }
 
         void Run2()

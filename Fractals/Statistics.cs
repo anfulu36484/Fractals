@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using Fractals.DrawFractal;
 
 namespace Fractals
 {
@@ -20,7 +21,7 @@ namespace Fractals
 
         void GetCountLiveAndDeadFractals(ref int liveFractals, ref int deadFractals)
         {
-            deadFractals = _fieldGenerator.FractalPopulation.Fractals.Count(n => n.Dead);
+            deadFractals = _fieldGenerator.FractalPopulation.Fractals.Count(n => n.StateOfFractal==StateOfFractal.Dead);
             liveFractals = _fieldGenerator.FractalPopulation.Fractals.Count - deadFractals;
         }
 
