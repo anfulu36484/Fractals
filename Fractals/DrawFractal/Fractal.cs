@@ -11,8 +11,8 @@ namespace Fractals.DrawFractal
         private Color _colorOfFractal;
         private Vector _lastPosition;
         private StateOfFractal _stateOfFractal;
-        private PainterOfPoints _painterOfPoints;
-        private DeterminantOfGrowthPoints _determinantOfGrowthPoints;
+
+
 
         public StateOfFractal StateOfFractal
         {
@@ -27,8 +27,7 @@ namespace Fractals.DrawFractal
             _lastPosition = lastPosition;
             _colorOfFractal = colorOfFractal;
             _stateOfFractal = StateOfFractal.Live;
-            _painterOfPoints = new PainterOfPoints(this, fieldGenerator);
-            _determinantOfGrowthPoints = new DeterminantOfGrowthPoints(this, fieldGenerator);
+
         }
 
         public void GenerateInitialPoint()
@@ -39,12 +38,15 @@ namespace Fractals.DrawFractal
 
         public void GenerateNextPoint()
         {
-            Vector nextPoint = _determinantOfGrowthPoints.DetermineGrowthPoint(_lastPosition);
+            Vector nextPoint = DeterminantOfGrowthPoints.DetermineGrowthPoint(_lastPosition,_fieldGenerator,this);
             if (nextPoint == null)
                 StateOfFractal = StateOfFractal.Dead;
             else
             {
-                _painterOfPoints.Draw(nextPoint,);
+                List<Vector> neighborhoodOfPoint =
+                    DeterminantOfGrowthPoints.RemoveTheCoordinatesLieOutsideOfField(
+                        DeterminantOfGrowthPoints.GetCoordinatеsAllTheCells(nextPoint),_fieldGenerator);
+                PainterOfPoints.Draw(nextPoint, neighborhoodOfPoint, _fieldGenerator, this);
                 _lastPosition = nextPoint;
             }
 

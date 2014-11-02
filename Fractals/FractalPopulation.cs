@@ -24,7 +24,7 @@ namespace Fractals
         }
 
 
-        private int _initialCountOfFractals = 1000;
+        private int _initialCountOfFractals = 50;
 
         public void GenerateInitialFractals()
         {
@@ -50,7 +50,7 @@ namespace Fractals
 
         public bool WhetherThereAreLivingFractals()
         {
-            return !_fractals.All(fractal => fractal.StateOfFractal);
+            return _fractals.Any(fractal => fractal.StateOfFractal != StateOfFractal.Dead);
         }
     }
 }

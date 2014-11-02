@@ -9,23 +9,15 @@ using System.Threading.Tasks;
 
 namespace Fractals.DrawFractal
 {
-    class DeterminantOfGrowthPoints
+    static class DeterminantOfGrowthPoints
     {
 
-        private Fractal _fractal;
-        private FieldGenerator _fieldGenerator;
-
-        public DeterminantOfGrowthPoints(Fractal fractal, FieldGenerator fieldGenerator)
-        {
-            _fractal = fractal;
-            _fieldGenerator = fieldGenerator;
-        }
 
         /// <summary>
         /// Получить координаты всех ячеек в диапазоне от n-1 до n+1 кроме точки {n, n}
         /// Коордианаты x y задают точку {n, n}
         /// </summary>
-        List<Vector> GetCoordinatеsAllTheCells(Vector p)
+        public static List<Vector> GetCoordinatеsAllTheCells(Vector p)
         {
             return new List<Vector>
             {
@@ -45,17 +37,17 @@ namespace Fractals.DrawFractal
         /// Отфильтровать коордианты, лежашие за предеолами поля
         /// </summary>
         /// <returns></returns>
-        List<Vector> RemoveTheCoordinatesLieOutsideOfField(List<Vector> input)
+        public static List<Vector> RemoveTheCoordinatesLieOutsideOfField(List<Vector> input, FieldGenerator fieldGenerator)
         {
             return input.Where(n => !(n.y < 0
                                       || n.x < 0
-                                      || n.y > _fieldGenerator.DimensionField - 1
-                                      || n.x > _fieldGenerator.DimensionField - 1))
+                                      || n.y > fieldGenerator.DimensionField - 1
+                                      || n.x > fieldGenerator.DimensionField - 1))
                         .ToList();
         }
 
 
-        float DefineOfDensity(Color color)
+        static float DefineOfDensity(Color color)
         {
             return 1/(float)(color.R + color.G + color.B);
         }
@@ -68,15 +60,16 @@ namespace Fractals.DrawFractal
         /// </summary>
         /// <param name="coordinates"></param>
         /// <returns></returns>
-        StateOfFractal CheckingConditionStoppingGrowth(List<Vector> coordinates)
+        static StateOfFractal CheckingConditionStoppingGrowth(List<Vector> coordinates, 
+            FieldGenerator fieldGenerator, Fractal fractal )
         {
             var densityForNeigborhood = coordinates.Select(n => new
             {
                 vector = n,
-                density = DefineOfDensity(_fieldGenerator.Field[n.y, n.x])
+                density = DefineOfDensity(fieldGenerator.Field[n.y, n.x])
             });
 
-            double densityOfFractal = DefineOfDensity(_fractal.ColorOfFractal);
+            double densityOfFractal = DefineOfDensity(fractal.ColorOfFractal);
 
             foreach (var n in densityForNeigborhood)
             {
@@ -91,12 +84,12 @@ namespace Fractals.DrawFractal
         /// Найти координаты с наименьшей плотностью
         /// </summary>
         /// <returns></returns>
-        List<Vector> FindTheCoordinatesWithLowesDensity(List<Vector> input)
+        static List<Vector> FindTheCoordinatesWithLowesDensity(List<Vector> input, FieldGenerator fieldGenerator)
         {
             var densityForNeigborhood = input.Select(n => new
             {
                 vector = n,
-                density = DefineOfDensity(_fieldGenerator.Field[n.y, n.x])
+                density = DefineOfDensity(fieldGenerator.Field[n.y, n.x])
             });
 
             float minValue = densityForNeigborhood.Min(n => n.density); //Находим значение минимальной плотности ячейки из коллекции input
@@ -115,9 +108,9 @@ namespace Fractals.DrawFractal
         /// Если точек с минимальной плотностью несколько, то случайным образом выберим одну.
         /// </summary>
         /// <returns></returns>
-        Vector SelectionOfOlyOnePointOfCollection(List<Vector> input )
+        static Vector SelectionOfOlyOnePointOfCollection(List<Vector> input, FieldGenerator fieldGenerator)
         {
-            return input[_fieldGenerator.Rand.Next(input.Count)];
+            return input[fieldGenerator.Rand.Next(input.Count)];
         }
 
         
@@ -126,20 +119,20 @@ namespace Fractals.DrawFractal
         /// Определение точки роста
         /// </summary>
         /// <returns></returns>
-        public Vector DetermineGrowthPoint(Vector initialPoint)
+        public static Vector DetermineGrowthPoint(Vector initialPoint, FieldGenerator fieldGenerator, Fractal fractal)
         {
             //Получаем координаты всех ячеек в диапазоне от n-1 до n+1 кроме точки {n, n}
             List<Vector> coordinatеsAllTheCells = GetCoordinatеsAllTheCells(initialPoint);
             //Отфильтровываем коордианты, лежашие за предеолами поля
-            List<Vector> coordinatesLieOutsideOfField = RemoveTheCoordinatesLieOutsideOfField(coordinatеsAllTheCells);
+            List<Vector> coordinatesLieOutsideOfField = RemoveTheCoordinatesLieOutsideOfField(coordinatеsAllTheCells,fieldGenerator);
 
-            if (CheckingConditionStoppingGrowth(coordinatesLieOutsideOfField) == StateOfFractal.Live)
+            if (CheckingConditionStoppingGrowth(coordinatesLieOutsideOfField,fieldGenerator,fractal) == StateOfFractal.Live)
             {
-                List<Vector> coordinatesWithLowesDensity = FindTheCoordinatesWithLowesDensity(coordinatesLieOutsideOfField);
+                List<Vector> coordinatesWithLowesDensity = FindTheCoordinatesWithLowesDensity(coordinatesLieOutsideOfField,fieldGenerator);
                 if (coordinatesWithLowesDensity.Count == 1)
                     return coordinatesWithLowesDensity[0];
                 else
-                    return SelectionOfOlyOnePointOfCollection(coordinatesWithLowesDensity);
+                    return SelectionOfOlyOnePointOfCollection(coordinatesWithLowesDensity,fieldGenerator);
             }
             else
             {
