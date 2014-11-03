@@ -17,8 +17,10 @@
                 <Label Name="DeadFractalLabel">Число мертвых цепей:</Label>
             </StackPanel>
            <Button   Content="Запуск"  VerticalAlignment="Center" Width="75" 
-                 Margin="0,0,10,0" Click="Button_Click"    /> 
-           
+                 Margin="0,0,10,0" Click="Start_Button_Click"    />
+            <Button   Content="Стоп"  VerticalAlignment="Center" Width="75" 
+                 Margin="0,0,10,0" Click="Stop_Button_Click"     />
+
         </StackPanel>
         
         

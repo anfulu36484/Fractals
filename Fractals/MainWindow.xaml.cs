@@ -96,11 +96,19 @@ namespace Fractals
             _fieldGenerator.Generate(GetResultHandler);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private Thread _thread;
+
+        private void Start_Button_Click(object sender, RoutedEventArgs e)
         {
-            Thread thread = new Thread(Run2);
-            thread.Start();
+            _thread = new Thread(Run2);
+            _thread.Start();
         }
+
+        private void Stop_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _thread.Abort();
+        }
+
 
 
     }
