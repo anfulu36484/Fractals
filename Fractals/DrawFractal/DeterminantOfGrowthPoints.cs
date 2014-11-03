@@ -47,7 +47,7 @@ namespace Fractals.DrawFractal
         }
 
 
-        static float DefineOfDensity(Color color)
+        public static float DefineOfDensity(Color color)
         {
             return 1/(float)(color.R + color.G + color.B);
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -36,11 +37,13 @@ namespace Fractals
         private Statistics _statistics;
         private FieldGenerator _fieldGenerator;
 
+        private int _sizeOfField = 1000;
+
         public MainWindow()
         {
             InitializeComponent();
             _bmpGenerator = new BMPGenerator();
-            _fieldGenerator = new FieldGenerator(300);
+            _fieldGenerator = new FieldGenerator(_sizeOfField);
             _statistics = new Statistics(_fieldGenerator,this);
         }
 
@@ -57,8 +60,8 @@ namespace Fractals
                     BitmapImage bitmapImage = new BitmapImage();
                     bitmapImage.BeginInit();
                     bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmapImage.DecodePixelHeight = 300;
-                    bitmapImage.DecodePixelWidth = 300;
+                    bitmapImage.DecodePixelHeight = _sizeOfField;
+                    bitmapImage.DecodePixelWidth = _sizeOfField;
                     bitmapImage.StreamSource = memoryStream;
 
                     bitmapImage.EndInit();

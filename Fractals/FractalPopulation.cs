@@ -24,7 +24,7 @@ namespace Fractals
         }
 
 
-        private int _initialCountOfFractals = 50;
+        private int _initialCountOfFractals = 100;
 
         public void GenerateInitialFractals()
         {
