@@ -37,7 +37,7 @@ namespace Fractals
         private Statistics _statistics;
         private FieldGenerator _fieldGenerator;
 
-        private int _sizeOfField = 300;
+        private int _sizeOfField = 500;
 
         public MainWindow()
         {
