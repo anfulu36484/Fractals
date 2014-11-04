@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -12,8 +13,6 @@ namespace Fractals.DrawFractal
         private Vector _lastPosition;
         private StateOfFractal _stateOfFractal;
 
-
-
         public StateOfFractal StateOfFractal
         {
             get { return _stateOfFractal; }
@@ -21,13 +20,15 @@ namespace Fractals.DrawFractal
         }
         public Color ColorOfFractal { get { return _colorOfFractal; } }
 
-        public Fractal(FieldGenerator fieldGenerator, Vector lastPosition, Color colorOfFractal)
+        public Fractal(FieldGenerator fieldGenerator, Vector lastPosition, Color colorOfFractal, FractalPopulation fractalPopulation)
         {
             _fieldGenerator = fieldGenerator;
             _lastPosition = lastPosition;
             _colorOfFractal = colorOfFractal;
             _stateOfFractal = StateOfFractal.Live;
-
+            _fractalPopulation = fractalPopulation;
+            _countOfMemberShip = 0;
+            _maxCountOfMemberShip = 40;
         }
 
         public void GenerateInitialPoint()
@@ -35,20 +36,59 @@ namespace Fractals.DrawFractal
             _fieldGenerator.Field[_lastPosition.y, _lastPosition.x] = _colorOfFractal;
         }
 
+        #region Создание нового фрактала как ответвления от существующего
+
+        private int _countOfMemberShip;
+
+        /// <summary>
+        /// Максимальное количество членов в цепочке после которого зараждается еще одна цепочка
+        /// </summary>
+        private int _maxCountOfMemberShip;
+
+        private FractalPopulation _fractalPopulation;
+
+        void GenerateNewFractal()
+        {
+            Vector newInitialPoint = DeterminantOfGrowthPoints.DetermineGrowthPoint(_lastPosition, _fieldGenerator, this);
+            Fractal fractal = new Fractal(_fieldGenerator,newInitialPoint,_colorOfFractal,_fractalPopulation);
+            _fractalPopulation.AddFractal(fractal);
+        }
+
+        #endregion
 
         public void GenerateNextPoint()
         {
-            Vector nextPoint = DeterminantOfGrowthPoints.DetermineGrowthPoint(_lastPosition,_fieldGenerator,this);
-            if (nextPoint == null)
+            if(_lastPosition ==null)
                 StateOfFractal = StateOfFractal.Dead;
             else
             {
-                List<Vector> neighborhoodOfPoint =
-                    DeterminantOfGrowthPoints.RemoveTheCoordinatesLieOutsideOfField(
-                        DeterminantOfGrowthPoints.GetCoordinatеsAllTheCells(nextPoint),_fieldGenerator);
-                PainterOfPoints.Draw(nextPoint, neighborhoodOfPoint, _fieldGenerator, this);
-                _lastPosition = nextPoint;
+                Vector nextPoint = DeterminantOfGrowthPoints.DetermineGrowthPoint(_lastPosition, _fieldGenerator, this);
+                if (nextPoint == null)
+                    StateOfFractal = StateOfFractal.Dead;
+                else
+                {
+                    List<Vector> neighborhoodOfPoint =
+                        DeterminantOfGrowthPoints.RemoveTheCoordinatesLieOutsideOfField(
+                            DeterminantOfGrowthPoints.GetCoordinatеsAllTheCells(nextPoint, this), _fieldGenerator);
+                    PainterOfPoints.Draw(nextPoint, neighborhoodOfPoint, _fieldGenerator, this);
+
+                    _lastPosition = nextPoint;
+
+
+                    if (_countOfMemberShip > _maxCountOfMemberShip)
+                    {
+                        GenerateNewFractal();
+                        _countOfMemberShip = 0;
+                    }
+                    else
+                    {
+                        _countOfMemberShip++;
+                    }
+                }
+
+
             }
+            
 
         }
 

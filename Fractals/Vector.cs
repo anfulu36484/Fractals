@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Fractals
 {
-    class Vector
+    class Vector 
     {
 
         public int x, y;

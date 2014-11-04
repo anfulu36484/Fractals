@@ -52,8 +52,8 @@ namespace Fractals
             do
             {
                 _fractalPopulation.GenerateNextPoints();
-
-            } while (_fractalPopulation.WhetherThereAreLivingFractals());
+                _fractalPopulation.AddAndRemoveFractalsFromCollection();
+            } while (_fractalPopulation.CheckStopCondition());
 
             return _field;
 
@@ -69,9 +69,10 @@ namespace Fractals
             do
             {
                 _fractalPopulation.GenerateNextPoints();
+                _fractalPopulation.AddAndRemoveFractalsFromCollection();
                 getField(_field);
 
-            } while (_fractalPopulation.WhetherThereAreLivingFractals());
+            } while (_fractalPopulation.CheckStopCondition());
         }
 
     }

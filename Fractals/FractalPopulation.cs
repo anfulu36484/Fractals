@@ -13,6 +13,7 @@ namespace Fractals
     {
 
         List<Fractal> _fractals = new List<Fractal>();
+        List<Fractal> _tempFractalsCollection = new List<Fractal>();
 
         public List<Fractal> Fractals { get { return _fractals; } } 
 
@@ -24,7 +25,7 @@ namespace Fractals
         }
 
 
-        private int _initialCountOfFractals = 100;
+        private int _initialCountOfFractals = 3;
 
         public void GenerateInitialFractals()
         {
@@ -33,7 +34,8 @@ namespace Fractals
                                         new Vector(_fieldGenerator.Rand.Next(_fieldGenerator.DimensionField),
                                              _fieldGenerator.Rand.Next(_fieldGenerator.DimensionField)),
                                         Color.FromArgb(_fieldGenerator.Rand.Next(255), _fieldGenerator.Rand.Next(255),
-                                             _fieldGenerator.Rand.Next(255))))
+                                             _fieldGenerator.Rand.Next(255)),
+                                        this))
                  .ToList();
 
         }
@@ -48,9 +50,26 @@ namespace Fractals
             _fractals.ForEach(n=>n.GenerateNextPoint());
         }
 
-        public bool WhetherThereAreLivingFractals()
+        public void AddFractal(Fractal fractal)
         {
-            return _fractals.Any(fractal => fractal.StateOfFractal != StateOfFractal.Dead);
+            _tempFractalsCollection.Add(fractal);
+        }
+
+        /// <summary>
+        /// Добавить новые и удалить мертвые фракталы из коллекции
+        /// </summary>
+        public void AddAndRemoveFractalsFromCollection()
+        {
+            //удаление мертвых фракталов
+            _fractals = _fractals/*.Where(fractal => fractal.StateOfFractal != StateOfFractal.Dead)*/
+                                 .Concat(_tempFractalsCollection)
+                                 .ToList();
+            _tempFractalsCollection = new List<Fractal>();
+        }
+
+        public bool CheckStopCondition()
+        {
+            return _fractals.Count != 0;
         }
     }
 }

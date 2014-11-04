@@ -17,8 +17,9 @@ namespace Fractals.DrawFractal
         /// Получить координаты всех ячеек в диапазоне от n-1 до n+1 кроме точки {n, n}
         /// Коордианаты x y задают точку {n, n}
         /// </summary>
-        public static List<Vector> GetCoordinatеsAllTheCells(Vector p)
+        public static List<Vector> GetCoordinatеsAllTheCells(Vector p, Fractal fractal)
         {
+            Fractal f = fractal;
             return new List<Vector>
             {
                 new Vector(p.y - 1, p.x - 1),
@@ -122,7 +123,7 @@ namespace Fractals.DrawFractal
         public static Vector DetermineGrowthPoint(Vector initialPoint, FieldGenerator fieldGenerator, Fractal fractal)
         {
             //Получаем координаты всех ячеек в диапазоне от n-1 до n+1 кроме точки {n, n}
-            List<Vector> coordinatеsAllTheCells = GetCoordinatеsAllTheCells(initialPoint);
+            List<Vector> coordinatеsAllTheCells = GetCoordinatеsAllTheCells(initialPoint, fractal);
             //Отфильтровываем коордианты, лежашие за предеолами поля
             List<Vector> coordinatesLieOutsideOfField = RemoveTheCoordinatesLieOutsideOfField(coordinatеsAllTheCells,fieldGenerator);
 
