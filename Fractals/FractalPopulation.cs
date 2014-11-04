@@ -25,7 +25,7 @@ namespace Fractals
         }
 
 
-        private int _initialCountOfFractals = 3;
+        private int _initialCountOfFractals = 10;
 
         public void GenerateInitialFractals()
         {
@@ -33,8 +33,8 @@ namespace Fractals
                 .Select(n => new Fractal(_fieldGenerator,
                                         new Vector(_fieldGenerator.Rand.Next(_fieldGenerator.DimensionField),
                                              _fieldGenerator.Rand.Next(_fieldGenerator.DimensionField)),
-                                        Color.FromArgb(_fieldGenerator.Rand.Next(255), _fieldGenerator.Rand.Next(255),
-                                             _fieldGenerator.Rand.Next(255)),
+                                        Color.FromArgb(_fieldGenerator.Rand.Next(0), _fieldGenerator.Rand.Next(255),
+                                             _fieldGenerator.Rand.Next(0)),
                                         this))
                  .ToList();
 
@@ -69,7 +69,7 @@ namespace Fractals
 
         public bool CheckStopCondition()
         {
-            return _fractals.Count != 0;
+            return !_fractals.All(n => n.StateOfFractal == StateOfFractal.Dead);
         }
     }
 }

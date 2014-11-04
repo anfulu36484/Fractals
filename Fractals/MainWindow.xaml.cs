@@ -73,6 +73,9 @@ namespace Fractals
             }), null);
         }
 
+        /// <summary>
+        /// Вывести на экран конечный вариант картинки
+        /// </summary>
         void Run1()
         {
             System.Drawing.Color[,] field = _fieldGenerator.Generate();
@@ -94,16 +97,40 @@ namespace Fractals
             //Thread.Sleep(100);
         }
 
+        /// <summary>
+        /// Выводить на экран картинку при кождой итерации алгоритма
+        /// </summary>
         void Run2()
         {
             _fieldGenerator.Generate(GetResultHandler);
         }
 
+
+        #region Сохранение всех картинок в папку
+
+        void GetResultHandler_SaveImage(System.Drawing.Color[,] field)
+        {
+
+            _bmpGenerator.CreateBMPImage(field);
+
+            _bmpGenerator.SaveImageWithEnumerator(@"D:\С_2013\Fractals\Data");
+            
+        }
+
+        void Run3()
+        {
+            _fieldGenerator.Generate(GetResultHandler_SaveImage);
+            BMPGenerator.CountOfImage = 0;
+        }
+
+
+        #endregion
+
         private Thread _thread;
 
         private void Start_Button_Click(object sender, RoutedEventArgs e)
         {
-            _thread = new Thread(Run2);
+            _thread = new Thread(Run3);
             _thread.Start();
         }
 
