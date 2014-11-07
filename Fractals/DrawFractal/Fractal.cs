@@ -28,7 +28,7 @@ namespace Fractals.DrawFractal
             _stateOfFractal = StateOfFractal.Live;
             _fractalPopulation = fractalPopulation;
             _countOfMemberShip = 0;
-            _maxCountOfMemberShip = 40;
+            _maxCountOfMemberShip = 10;
         }
 
         public void GenerateInitialPoint()
@@ -41,7 +41,7 @@ namespace Fractals.DrawFractal
         private int _countOfMemberShip;
 
         /// <summary>
-        /// Максимальное количество членов в цепочке после которого зараждается еще одна цепочка
+        /// Максимальное количество членов в цепочке после которого зарождается еще одна цепочка
         /// </summary>
         private int _maxCountOfMemberShip;
 
@@ -54,11 +54,24 @@ namespace Fractals.DrawFractal
             _fractalPopulation.AddFractal(fractal);
         }
 
+        void GenNewFractalInTheEventOfConditions()
+        {
+            if (_countOfMemberShip > _maxCountOfMemberShip)
+            {
+                GenerateNewFractal();
+                _countOfMemberShip = 0;
+            }
+            else
+            {
+                _countOfMemberShip++;
+            }
+        }
+
         #endregion
 
         public void GenerateNextPoint()
         {
-            if(_lastPosition ==null)
+            if(_lastPosition == null)
                 StateOfFractal = StateOfFractal.Dead;
             else
             {
@@ -67,30 +80,19 @@ namespace Fractals.DrawFractal
                     StateOfFractal = StateOfFractal.Dead;
                 else
                 {
-                    List<Vector> neighborhoodOfPoint =
-                        DeterminantOfGrowthPoints.RemoveTheCoordinatesLieOutsideOfField(
-                            DeterminantOfGrowthPoints.GetCoordinatеsAllTheCells(nextPoint, this), _fieldGenerator);
+                    Vector[,] neighborhoodOfPoint =
+                        DeterminantOfCircularNeighborhoods.DetermineDensityForEachCell(nextPoint, this, 2,
+                            _fieldGenerator);
                     PainterOfPoints.Draw(nextPoint, neighborhoodOfPoint, _fieldGenerator, this);
 
                     _lastPosition = nextPoint;
 
+                    GenNewFractalInTheEventOfConditions();
 
-                    if (_countOfMemberShip > _maxCountOfMemberShip)
-                    {
-                        GenerateNewFractal();
-                        _countOfMemberShip = 0;
-                    }
-                    else
-                    {
-                        _countOfMemberShip++;
-                    }
                 }
 
-
             }
-            
-
-        }
+         }
 
     }
 

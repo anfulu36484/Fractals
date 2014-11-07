@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("Fractals")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("KrotySOFT")]
+[assembly: AssemblyCompany("_")]
 [assembly: AssemblyProduct("Fractals")]
-[assembly: AssemblyCopyright("Copyright © KrotySOFT 2014")]
+[assembly: AssemblyCopyright("Copyright © 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

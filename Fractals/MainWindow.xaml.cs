@@ -37,7 +37,7 @@ namespace Fractals
         private Statistics _statistics;
         private FieldGenerator _fieldGenerator;
 
-        private int _sizeOfField = 500;
+        private int _sizeOfField = 300;
 
         public MainWindow()
         {
@@ -130,7 +130,7 @@ namespace Fractals
 
         private void Start_Button_Click(object sender, RoutedEventArgs e)
         {
-            _thread = new Thread(Run3);
+            _thread = new Thread(Run2);
             _thread.Start();
         }
 

@@ -25,7 +25,7 @@ namespace Fractals
         }
 
 
-        private int _initialCountOfFractals = 10;
+        private int _initialCountOfFractals = 30;
 
         public void GenerateInitialFractals()
         {
@@ -33,8 +33,8 @@ namespace Fractals
                 .Select(n => new Fractal(_fieldGenerator,
                                         new Vector(_fieldGenerator.Rand.Next(_fieldGenerator.DimensionField),
                                              _fieldGenerator.Rand.Next(_fieldGenerator.DimensionField)),
-                                        Color.FromArgb(_fieldGenerator.Rand.Next(0), _fieldGenerator.Rand.Next(255),
-                                             _fieldGenerator.Rand.Next(0)),
+                                        Color.FromArgb(_fieldGenerator.Rand.Next(0), _fieldGenerator.Rand.Next(100,255),
+                                             _fieldGenerator.Rand.Next(100,255)),
                                         this))
                  .ToList();
 

@@ -17,11 +17,6 @@ namespace Fractals.DrawFractal
 
         #region Отрисовка окрестностей точки
 
-        /// <summary>
-        /// Константа, определяющая на сколько  должна возрасти плотность окрестной точки
-        /// </summary>
-        private static readonly float k = 1.1f;
-
 
         //Расчет плотности точки, лежащей в окрестностях новосозданной точки (px)
         static float CalcOfDensityOfNeighborhoodPoint(Vector neighborhoodOfPoint, FieldGenerator fieldGenerator)
@@ -50,7 +45,7 @@ namespace Fractals.DrawFractal
                                Color mixingColor)
         {
             float px = CalcOfDensityOfNeighborhoodPoint(neighborhoodOfPoint, fieldGenerator);
-            return (1/3f)*(1 - px*k*(mixingColor.R + mixingColor.G + mixingColor.B))/(px*k);
+            return (1 / 3f) * (1 - px * neighborhoodOfPoint.k * (mixingColor.R + mixingColor.G + mixingColor.B)) / (px * neighborhoodOfPoint.k);
         }
 
 
@@ -89,20 +84,24 @@ namespace Fractals.DrawFractal
         /// <summary>
         /// Нарисовать окрестности точки
         /// </summary>
-        static void DrawNeighborhoodOfPoint(Vector nextPoint, List<Vector> neighborhoodOfPoint, FieldGenerator fieldGenerator)
+        static void DrawNeighborhoodOfPoint(Vector nextPoint, Vector[,] neighborhoodOfPoint, FieldGenerator fieldGenerator)
         {
-            foreach (var v in neighborhoodOfPoint)
+            for (int i = 0; i < neighborhoodOfPoint.GetLength(0); i++)
             {
-                fieldGenerator.Field[v.y, v.x] = DefinitionColorOfNeighborhoodPoint(nextPoint,
-                                                                                    v,
+                for (int j = 0; j < neighborhoodOfPoint.GetLength(1); j++)
+                {
+                    if (neighborhoodOfPoint[i,j]!=null)
+                        fieldGenerator.Field[neighborhoodOfPoint[i,j].y, neighborhoodOfPoint[i,j].x] = DefinitionColorOfNeighborhoodPoint(nextPoint,
+                                                                                    neighborhoodOfPoint[i,j],
                                                                                     fieldGenerator);
+                }
             }
         }
 
         #endregion
 
 
-        public static void Draw(Vector nextPoint, List<Vector> neighborhoodOfPoint, 
+        public static void Draw(Vector nextPoint, Vector[,] neighborhoodOfPoint, 
             FieldGenerator fieldGenerator, Fractal fractal)
         {
             DrawPoint(nextPoint, fieldGenerator, fractal);
