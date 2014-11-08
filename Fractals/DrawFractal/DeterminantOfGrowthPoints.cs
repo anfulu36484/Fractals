@@ -19,17 +19,16 @@ namespace Fractals.DrawFractal
         /// </summary>
         public static List<Vector> GetCoordinatеsAllTheCells(Vector p, Fractal fractal)
         {
-            Fractal f = fractal;
             return new List<Vector>
             {
-                new Vector(p.y - 1, p.x - 1),
-                new Vector(p.y - 1, p.x),
-                new Vector(p.y - 1, p.x + 1),
-                new Vector(p.y, p.x + 1),
-                new Vector(p.y + 1, p.x + 1),
-                new Vector(p.y + 1, p.x),
-                new Vector(p.y + 1, p.x - 1),
-                new Vector(p.y, p.x - 1)
+                new Vector(p.x - 1, p.y - 1),
+                new Vector(p.x - 1, p.y),
+                new Vector(p.x - 1, p.y + 1),
+                new Vector(p.x, p.y + 1),
+                new Vector(p.x + 1, p.y + 1),
+                new Vector(p.x + 1, p.y),
+                new Vector(p.x + 1, p.y - 1),
+                new Vector(p.x, p.y - 1)
             };
         }
 
@@ -40,10 +39,10 @@ namespace Fractals.DrawFractal
         /// <returns></returns>
         public static List<Vector> RemoveTheCoordinatesLieOutsideOfField(List<Vector> input, FieldGenerator fieldGenerator)
         {
-            return input.Where(n => !(n.y < 0
-                                      || n.x < 0
-                                      || n.y > fieldGenerator.DimensionField - 1
-                                      || n.x > fieldGenerator.DimensionField - 1))
+            return input.Where(n => !(n.x < 0
+                                      || n.y < 0
+                                      || n.x > fieldGenerator.DimensionField - 1
+                                      || n.y > fieldGenerator.DimensionField - 1))
                         .ToList();
         }
 
@@ -67,7 +66,7 @@ namespace Fractals.DrawFractal
             var densityForNeigborhood = coordinates.Select(n => new
             {
                 vector = n,
-                density = DefineOfDensity(fieldGenerator.Field[n.y, n.x])
+                density = DefineOfDensity(fieldGenerator.Field[n.x, n.y])
             });
 
             double densityOfFractal = DefineOfDensity(fractal.ColorOfFractal);
@@ -90,7 +89,7 @@ namespace Fractals.DrawFractal
             var densityForNeigborhood = input.Select(n => new
             {
                 vector = n,
-                density = DefineOfDensity(fieldGenerator.Field[n.y, n.x])
+                density = DefineOfDensity(fieldGenerator.Field[n.x, n.y])
             });
 
             float minValue = densityForNeigborhood.Min(n => n.density); //Находим значение минимальной плотности ячейки из коллекции input

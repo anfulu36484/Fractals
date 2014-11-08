@@ -46,9 +46,9 @@ namespace Fractals.DrawFractal
         /// z = sqrt(R^2 - x^2 - y^2)
         /// </summary>
         /// <param name="R">Радиус окрестностей точки</param>
-        static float CalcZ(int R, int y, int x)
+        static float CalcZ(int R, int x, int y)
         {
-            double expressionUnderRoot = Math.Pow(R, 2) - Math.Pow(x, 2) - Math.Pow(y, 2);
+            double expressionUnderRoot = Math.Pow(R, 2) - Math.Pow(y, 2) - Math.Pow(x, 2);
             if(expressionUnderRoot<=0)
                 return Single.NaN;
             return (float)Math.Sqrt(expressionUnderRoot);
@@ -70,7 +70,7 @@ namespace Fractals.DrawFractal
             {
                 for (int j = 0; j < 2*(R-1); j++)
                 {
-                    float z = CalcZ(R, j - (R - 1), i - (R - 1));
+                    float z = CalcZ(R, i - (R - 1), j - (R - 1));
 
                     //Если обращаемся к значению, лежащему за пределами круговых окрестностей, то
                     //константу к приравниваем к единице
@@ -87,12 +87,12 @@ namespace Fractals.DrawFractal
         /// Условие выхода координат за пределы поля
         /// </summary>
         /// <returns></returns>
-        static bool CoordinatesLieOutsideOfField(int y, int x, FieldGenerator fieldGenerator)
+        static bool CoordinatesLieOutsideOfField(int x, int y, FieldGenerator fieldGenerator)
         {
-            return y < 0
-                   || x < 0
-                   || y > fieldGenerator.DimensionField - 1
-                   || x > fieldGenerator.DimensionField - 1;
+            return x < 0
+                   || y < 0
+                   || x > fieldGenerator.DimensionField - 1
+                   || y > fieldGenerator.DimensionField - 1;
         }
 
         /// <summary>
@@ -107,12 +107,12 @@ namespace Fractals.DrawFractal
             {
                 for (int j = 0; j < 2*(R - 1); j++)
                 {
-                    int y = p.y + j;
                     int x = p.x + i;
-                    if(CoordinatesLieOutsideOfField(y, x, fieldGenerator))//Координаты, лежашие за пределами поля отфильтровываются
+                    int y = p.y + j;
+                    if(CoordinatesLieOutsideOfField(x, y, fieldGenerator))//Координаты, лежашие за пределами поля отфильтровываются
                         output[i,j]=null;
                     else
-                        output[i, j] = new Vector(y,x);
+                        output[i, j] = new Vector(x,y);
                 }
             }
 

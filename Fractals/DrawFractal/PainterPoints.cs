@@ -12,7 +12,7 @@ namespace Fractals.DrawFractal
         /// <param name="nextPoint"></param>
         static void DrawPoint(Vector nextPoint, FieldGenerator fieldGenerator, Fractal fractal)
         {
-            fieldGenerator.Field[nextPoint.y, nextPoint.x] = fractal.ColorOfFractal;
+            fieldGenerator.Field[nextPoint.x, nextPoint.y] = fractal.ColorOfFractal;
         }
 
         #region Отрисовка окрестностей точки
@@ -21,7 +21,7 @@ namespace Fractals.DrawFractal
         //Расчет плотности точки, лежащей в окрестностях новосозданной точки (px)
         static float CalcOfDensityOfNeighborhoodPoint(Vector neighborhoodOfPoint, FieldGenerator fieldGenerator)
         {
-            return DeterminantOfGrowthPoints.DefineOfDensity(fieldGenerator.Field[neighborhoodOfPoint.y, neighborhoodOfPoint.x]);
+            return DeterminantOfGrowthPoints.DefineOfDensity(fieldGenerator.Field[neighborhoodOfPoint.x, neighborhoodOfPoint.y]);
         }
 
         /// <summary>
@@ -66,8 +66,8 @@ namespace Fractals.DrawFractal
                                                         Vector neighborhoodOfPoint, 
                                                         FieldGenerator fieldGenerator)
         {
-            Color mixingColor = MixingColor(fieldGenerator.Field[nextPoint.y, nextPoint.x],
-                fieldGenerator.Field[neighborhoodOfPoint.y, neighborhoodOfPoint.x]);
+            Color mixingColor = MixingColor(fieldGenerator.Field[nextPoint.x, nextPoint.y],
+                fieldGenerator.Field[neighborhoodOfPoint.x, neighborhoodOfPoint.y]);
 
             int alpha = (int)CalcAlpha(neighborhoodOfPoint, fieldGenerator, mixingColor);
 
@@ -91,7 +91,7 @@ namespace Fractals.DrawFractal
                 for (int j = 0; j < neighborhoodOfPoint.GetLength(1); j++)
                 {
                     if (neighborhoodOfPoint[i,j]!=null)
-                        fieldGenerator.Field[neighborhoodOfPoint[i,j].y, neighborhoodOfPoint[i,j].x] = DefinitionColorOfNeighborhoodPoint(nextPoint,
+                        fieldGenerator.Field[neighborhoodOfPoint[i,j].x, neighborhoodOfPoint[i,j].y] = DefinitionColorOfNeighborhoodPoint(nextPoint,
                                                                                     neighborhoodOfPoint[i,j],
                                                                                     fieldGenerator);
                 }

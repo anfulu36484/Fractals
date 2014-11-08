@@ -33,7 +33,7 @@ namespace Fractals.DrawFractal
 
         public void GenerateInitialPoint()
         {
-            _fieldGenerator.Field[_lastPosition.y, _lastPosition.x] = _colorOfFractal;
+            _fieldGenerator.Field[_lastPosition.x, _lastPosition.y] = _colorOfFractal;
         }
 
         #region Создание нового фрактала как ответвления от существующего
@@ -81,7 +81,7 @@ namespace Fractals.DrawFractal
                 else
                 {
                     Vector[,] neighborhoodOfPoint =
-                        DeterminantOfCircularNeighborhoods.DetermineDensityForEachCell(nextPoint, this, 2,
+                        DeterminantOfCircularNeighborhoods.DetermineDensityForEachCell(nextPoint, this, 3,
                             _fieldGenerator);
                     PainterOfPoints.Draw(nextPoint, neighborhoodOfPoint, _fieldGenerator, this);
 

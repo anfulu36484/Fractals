@@ -10,7 +10,7 @@ namespace Fractals
     {
 
         public int x, y;
-        public Vector(int y, int x)
+        public Vector(int x, int y)
         {
             this.x = x;
             this.y = y;
@@ -21,7 +21,7 @@ namespace Fractals
         /// </summary>
         public float k;
 
-        public Vector(int y, int x, float k)
+        public Vector(int x, int y, float k)
         {
             this.x = x;
             this.y = y;
