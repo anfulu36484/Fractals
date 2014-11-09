@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -66,10 +67,18 @@ namespace Fractals
             GenerateVoidField();
             _fractalPopulation.GenerateInitialPoints();
 
+            Stopwatch sw = new Stopwatch();
+            Stopwatch sw2 = new Stopwatch();
             do
             {
+                sw.Start();
                 _fractalPopulation.GenerateNextPoints();
+                sw.Stop();
+                Debug.WriteLine("Генерирование новых точек   {0} секунд", (float)sw.ElapsedMilliseconds/1000);
+                sw2.Start();
                 _fractalPopulation.AddAndRemoveFractalsFromCollection();
+                sw2.Stop();
+                Debug.WriteLine("Добавление и удаление новых фракталов из коллекции   {0} секунд", (float)sw2.ElapsedMilliseconds / 1000);
                 getField(_field);
 
             } while (_fractalPopulation.CheckStopCondition());

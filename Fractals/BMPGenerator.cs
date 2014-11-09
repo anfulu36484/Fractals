@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 
 namespace Fractals
@@ -19,6 +20,8 @@ namespace Fractals
         }
         public void CreateBMPImage(Color[,] field)
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
              _image= new Bitmap(field.GetLength(0),field.GetLength(1));
             for (int x = 0; x < field.GetLength(0); x++)
             {
@@ -27,6 +30,8 @@ namespace Fractals
                     _image.SetPixel(x, y, field[x, y]);
                 }
             }
+            sw.Stop();
+            Debug.WriteLine("Создание Bitmap картинки   {0} секунд",(float)sw.ElapsedMilliseconds/1000);
         }
 
 

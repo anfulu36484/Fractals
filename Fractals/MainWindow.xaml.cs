@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -37,7 +38,7 @@ namespace Fractals
         private Statistics _statistics;
         private FieldGenerator _fieldGenerator;
 
-        private int _sizeOfField = 300;
+        private int _sizeOfField = 600;
 
         public MainWindow()
         {
@@ -54,7 +55,8 @@ namespace Fractals
             {
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
-
+                    Stopwatch sw =new Stopwatch();
+                    sw.Start();
                     bitmap.Save(memoryStream, ImageFormat.Bmp);
 
                     BitmapImage bitmapImage = new BitmapImage();
@@ -67,7 +69,8 @@ namespace Fractals
                     bitmapImage.EndInit();
 
                     ImageField.Source = bitmapImage;
-
+                    sw.Stop();
+                    Debug.WriteLine("Вывод изображения на экран {0} секунд", (float)sw.ElapsedMilliseconds/1000);
                     return null;
                 }
             }), null);
