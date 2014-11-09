@@ -81,7 +81,7 @@ namespace Fractals.DrawFractal
                 else
                 {
                     Vector[,] neighborhoodOfPoint =
-                        DeterminantOfCircularNeighborhoods.DetermineDensityForEachCell(nextPoint, this, 3,
+                        DeterminantOfCircularNeighborhoods.DetermineDensityForEachCell(nextPoint, this, 10,
                             _fieldGenerator);
                     PainterOfPoints.Draw(nextPoint, neighborhoodOfPoint, _fieldGenerator, this);
 
