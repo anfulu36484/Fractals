@@ -12,3 +12,5 @@ D:\С_2013\Fractals\Fractals\obj\Debug\Fractals.csproj.GenerateResource.Cache
 D:\С_2013\Fractals\Fractals\obj\Debug\Fractals.exe
 D:\С_2013\Fractals\Fractals\obj\Debug\Fractals.pdb
 D:\С_2013\Fractals\Fractals\obj\Debug\Fractals.csprojResolveAssemblyReference.cache
+D:\С_2013\Fractals\Fractals\obj\Debug\SettingsWindow.baml
+D:\С_2013\Fractals\Fractals\obj\Debug\SettingsWindow.g.cs

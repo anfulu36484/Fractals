@@ -28,7 +28,7 @@ namespace Fractals.DrawFractal
             _stateOfFractal = StateOfFractal.Live;
             _fractalPopulation = fractalPopulation;
             _countOfMemberShip = 0;
-            _maxCountOfMemberShip = 10;
+            _maxCountOfMemberShip = Settings.MaxCountOfMemberShip;
         }
 
         public void GenerateInitialPoint()
@@ -81,7 +81,7 @@ namespace Fractals.DrawFractal
                 else
                 {
                     Vector[,] neighborhoodOfPoint =
-                        DeterminantOfCircularNeighborhoods.DetermineDensityForEachCell(nextPoint, this, 10,
+                        DeterminantOfCircularNeighborhoods.DetermineDensityForEachCell(nextPoint, this, Settings.R,
                             _fieldGenerator);
                     PainterOfPoints.Draw(nextPoint, neighborhoodOfPoint, _fieldGenerator, this);
 

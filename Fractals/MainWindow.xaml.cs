@@ -37,13 +37,12 @@ namespace Fractals
         private Statistics _statistics;
         private FieldGenerator _fieldGenerator;
 
-        private int _sizeOfField = 300;
 
         public MainWindow()
         {
             InitializeComponent();
             _bmpGenerator = new BMPGenerator();
-            _fieldGenerator = new FieldGenerator(_sizeOfField);
+            _fieldGenerator = new FieldGenerator(Settings.SizeOfField);
             _statistics = new Statistics(_fieldGenerator,this);
         }
 
@@ -60,8 +59,8 @@ namespace Fractals
                     BitmapImage bitmapImage = new BitmapImage();
                     bitmapImage.BeginInit();
                     bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmapImage.DecodePixelHeight = _sizeOfField;
-                    bitmapImage.DecodePixelWidth = _sizeOfField;
+                    bitmapImage.DecodePixelHeight = Settings.SizeOfField;
+                    bitmapImage.DecodePixelWidth = Settings.SizeOfField;
                     bitmapImage.StreamSource = memoryStream;
 
                     bitmapImage.EndInit();
@@ -137,6 +136,12 @@ namespace Fractals
         private void Stop_Button_Click(object sender, RoutedEventArgs e)
         {
             _thread.Abort();
+        }
+
+        private void OpenWindowSettings(object sender, RoutedEventArgs e)
+        {
+            SettingsWindow sw  = new SettingsWindow();
+            sw.Show();
         }
 
 

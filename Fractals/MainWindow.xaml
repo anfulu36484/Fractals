@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Fractals.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="600">
     <Grid Name="GridBase">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -20,6 +20,9 @@
                  Margin="0,0,10,0" Click="Start_Button_Click"    />
             <Button   Content="Стоп"  VerticalAlignment="Center" Width="75" 
                  Margin="0,0,10,0" Click="Stop_Button_Click"     />
+
+            <Button   Content="Настройки"  VerticalAlignment="Center" Width="75" 
+                 Margin="0,0,10,0" Click="OpenWindowSettings"     />
 
         </StackPanel>
         

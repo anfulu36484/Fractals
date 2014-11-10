@@ -25,7 +25,7 @@ namespace Fractals
         }
 
 
-        private int _initialCountOfFractals =5;
+        private int _initialCountOfFractals = Settings.InitialCountOfFractals;
 
         public void GenerateInitialFractals()
         {
