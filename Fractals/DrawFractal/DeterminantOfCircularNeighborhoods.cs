@@ -49,10 +49,10 @@ namespace Fractals.DrawFractal
         /// <param name="R">Радиус окрестностей точки</param>
         static float CalcZ_EquationOfSphere(int x, int y)
         {
-            //
-            float sigma = 1f;
-            
-            return (float) ((1/(2*Math.PI*sigma))*Math.Exp(-(x*x + y*y)/2*sigma));
+            double expressionUnderRoot = Math.Pow(Settings.R, 2) - Math.Pow(x, 2) - Math.Pow(y, 2);
+            if(expressionUnderRoot<=0)
+                return Single.NaN;
+            return (float)Math.Sqrt(expressionUnderRoot);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Fractals.DrawFractal
         /// <param name="R">Радиус окрестности точки</param>
         static void Calc_K_Array(int R)
         {
-            float zmax = Calc2_EquestionOfSauss(0, 0);
+            float zmax = CalcZ_EquationOfSphere(0, 0);
 
             k_array = new float[2*(R-1),2*(R-1)];
 
@@ -81,14 +81,14 @@ namespace Fractals.DrawFractal
             {
                 for (int j = 0; j < 2*(R-1); j++)
                 {
-                    float z = Calc2_EquestionOfSauss(i - (R - 1), j - (R - 1));
+                    float z = CalcZ_EquationOfSphere(i - (R - 1), j - (R - 1));
 
                     //Если обращаемся к значению, лежащему за пределами круговых окрестностей, то
                     //константу к приравниваем к единице
                     if (Single.IsNaN(z))
                         k_array[i, j] = 1;
                     else
-                        k_array[i, j] = 1 + z;
+                        k_array[i, j] = 1 + z/zmax;
                 }
             }
 
