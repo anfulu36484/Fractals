@@ -18,8 +18,8 @@ namespace VideoGenerator
 
         static void Main(string[] args)
         {
-            int width = 500;
-            int height = 500;
+            int width = 600;
+            int height = 600;
 
             VideoFileWriter writer = new VideoFileWriter();
             

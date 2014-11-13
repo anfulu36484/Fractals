@@ -29,21 +29,5 @@ namespace Fractals
             }
         }
 
-
-
-
-
-        public void SaveImage()
-        {
-            _image.Save("test.bmp",ImageFormat.Bmp);
-        }
-
-        public static int CountOfImage = 0;
-
-        public void SaveImageWithEnumerator(string directory)
-        {
-            _image.Save(string.Format(@"{0}\{1}.bmp",directory, CountOfImage), ImageFormat.Bmp);
-            CountOfImage++;
-        }
     }
 }

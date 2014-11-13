@@ -11,7 +11,7 @@ namespace Fractals
         /// <summary>
         /// Размер поля. Ширина = Высота = SizeOfField
         /// </summary>
-        public static int SizeOfField = 10;
+        public static int SizeOfField = 600;
 
         /// <summary>
         /// Начальное количество фракталов
@@ -21,7 +21,7 @@ namespace Fractals
         /// <summary>
         /// Максимальная длина фрактала, после которой происходит раздвоение фрактала
         /// </summary>
-        public static int MaxCountOfMemberShip = 30;
+        public static int MaxCountOfMemberShip = 10;
 
         /// <summary>
         /// Параметр уравнения Гаусса, определяющий ширину распределения Гаусса

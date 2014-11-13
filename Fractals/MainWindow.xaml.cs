@@ -105,26 +105,6 @@ namespace Fractals
         }
 
 
-        #region Сохранение всех картинок в папку
-
-        void GetResultHandler_SaveImage(System.Drawing.Color[,] field)
-        {
-
-            _bmpGenerator.CreateBMPImage(field);
-
-            _bmpGenerator.SaveImageWithEnumerator(@"D:\С_2013\Fractals\Data");
-            
-        }
-
-        void Run3()
-        {
-            _fieldGenerator.Generate(GetResultHandler_SaveImage);
-            BMPGenerator.CountOfImage = 0;
-        }
-
-
-        #endregion
-
         private Thread _thread;
 
         private void Start_Button_Click(object sender, RoutedEventArgs e)
