@@ -33,89 +33,23 @@ namespace Fractals
     public partial class MainWindow : Window
     {
 
-        private BMPGenerator _bmpGenerator;
-        private Statistics _statistics;
-        private FieldGenerator _fieldGenerator;
-
+        private DataManager _dataManager;
 
         public MainWindow()
         {
             InitializeComponent();
-            _bmpGenerator = new BMPGenerator();
-            _fieldGenerator = new FieldGenerator(Settings.SizeOfField);
-            _statistics = new Statistics(_fieldGenerator,this);
+            _dataManager = new DataManager(this);
         }
 
-
-        void DrawImage(Bitmap bitmap)
-        {
-            Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new System.Windows.Threading.DispatcherOperationCallback(delegate
-            {
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-
-                    bitmap.Save(memoryStream, ImageFormat.Bmp);
-
-                    BitmapImage bitmapImage = new BitmapImage();
-                    bitmapImage.BeginInit();
-                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmapImage.DecodePixelHeight = Settings.SizeOfField;
-                    bitmapImage.DecodePixelWidth = Settings.SizeOfField;
-                    bitmapImage.StreamSource = memoryStream;
-
-                    bitmapImage.EndInit();
-
-                    ImageField.Source = bitmapImage;
-
-                    return null;
-                }
-            }), null);
-        }
-
-        /// <summary>
-        /// Вывести на экран конечный вариант картинки
-        /// </summary>
-        void Run1()
-        {
-            System.Drawing.Color[,] field = _fieldGenerator.Generate();
-            _bmpGenerator.CreateBMPImage(field);
-
-            Bitmap bitmap = _bmpGenerator.ImageBitmap;
-            DrawImage(bitmap);
-        }
-
-
-        void GetResultHandler(System.Drawing.Color[,] field)
-        {
-
-            _bmpGenerator.CreateBMPImage(field);
-
-            Bitmap bitmap = _bmpGenerator.ImageBitmap;
-            DrawImage(bitmap);
-            _statistics.ShowStatistics();
-            //Thread.Sleep(100);
-        }
-
-        /// <summary>
-        /// Выводить на экран картинку при кождой итерации алгоритма
-        /// </summary>
-        void Run2()
-        {
-            _fieldGenerator.Generate(GetResultHandler);
-        }
-
-
-        private Thread _thread;
 
         private void Start_Button_Click(object sender, RoutedEventArgs e)
         {
-            _thread = new Thread(Run2);
-            _thread.Start();
+            _dataManager.Start();
         }
 
         private void Stop_Button_Click(object sender, RoutedEventArgs e)
         {
-            _thread.Abort();
+            _dataManager.Stop();
         }
 
         private void OpenWindowSettings(object sender, RoutedEventArgs e)

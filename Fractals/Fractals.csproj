@@ -67,6 +67,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="GeneratorOfRandomColor.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
@@ -81,7 +82,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BMPGenerator.cs" />
+    <Compile Include="BMPVisualizer.cs" />
     <Compile Include="FieldGenerator.cs" />
     <Compile Include="DrawFractal\Fractal.cs" />
     <Compile Include="MainWindow.xaml.cs">

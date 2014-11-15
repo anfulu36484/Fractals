@@ -24,10 +24,10 @@ namespace Fractals.DrawFractal
         {
             _fieldGenerator = fieldGenerator;
             _lastPosition = lastPosition;
-            _colorOfFractal = colorOfFractal;
             _stateOfFractal = StateOfFractal.Live;
             _fractalPopulation = fractalPopulation;
             _countOfMemberShip = 0;
+            _colorOfFractal = colorOfFractal;
             _maxCountOfMemberShip = Settings.MaxCountOfMemberShip;
         }
 
@@ -35,6 +35,8 @@ namespace Fractals.DrawFractal
         {
             _fieldGenerator.Field[_lastPosition.x, _lastPosition.y] = _colorOfFractal;
         }
+
+   
 
         #region Создание нового фрактала как ответвления от существующего
 
