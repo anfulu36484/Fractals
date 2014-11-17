@@ -1,31 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Fractals
+namespace Fractals.Model
 {
     class FieldGenerator
     {
         private Color[,] _field;
         private int _dimensionField;
-        private Random _random;
-        private FractalPopulation _fractalPopulation;
-
-        public FractalPopulation FractalPopulation { get { return _fractalPopulation; } }
-
+        
         public Color[,] Field { get { return _field; } }
         public int DimensionField { get { return _dimensionField; } }
-        public Random Rand { get { return _random; } }
 
-        public FieldGenerator(int dimensionField)
+        private FractalPopulation _fractalPopulation;
+
+        public FieldGenerator(FractalPopulation fractalPopulation, int dimensionField)
         {
+            _fractalPopulation = fractalPopulation;
             _dimensionField = dimensionField; 
-            _random = new Random();
         }
 
         void GenerateVoidField()
@@ -40,28 +31,9 @@ namespace Fractals
             }
         }
 
-        
-
-        public Color[,] Generate()
-        {
-            _fractalPopulation = new FractalPopulation(this);
-            _fractalPopulation.GenerateInitialFractals();
-            GenerateVoidField();
-            _fractalPopulation.GenerateInitialPoints();
-
-            do
-            {
-                _fractalPopulation.GenerateNextPoints();
-                _fractalPopulation.AddAndRemoveFractalsFromCollection();
-            } while (_fractalPopulation.CheckStopCondition());
-
-            return _field;
-
-        }
-
+      
         public void Generate(GetResult getField)
         {
-            _fractalPopulation = new FractalPopulation(this);
             _fractalPopulation.GenerateInitialFractals();
             GenerateVoidField();
             _fractalPopulation.GenerateInitialPoints();

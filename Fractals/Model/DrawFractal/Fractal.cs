@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Drawing;
 
-namespace Fractals.DrawFractal
+namespace Fractals.Model.DrawFractal
 {
     class Fractal
     {
@@ -12,6 +8,7 @@ namespace Fractals.DrawFractal
         private Color _colorOfFractal;
         private Vector _lastPosition;
         private StateOfFractal _stateOfFractal;
+        private FractalModel _fractalModel;
 
         public StateOfFractal StateOfFractal
         {
@@ -20,8 +17,9 @@ namespace Fractals.DrawFractal
         }
         public Color ColorOfFractal { get { return _colorOfFractal; } }
 
-        public Fractal(FieldGenerator fieldGenerator, Vector lastPosition, Color colorOfFractal, FractalPopulation fractalPopulation)
+        public Fractal(FractalModel fractalModel, FieldGenerator fieldGenerator, Vector lastPosition, Color colorOfFractal, FractalPopulation fractalPopulation)
         {
+            _fractalModel = fractalModel;
             _fieldGenerator = fieldGenerator;
             _lastPosition = lastPosition;
             _stateOfFractal = StateOfFractal.Live;
@@ -51,8 +49,8 @@ namespace Fractals.DrawFractal
 
         void GenerateNewFractal()
         {
-            Vector newInitialPoint = DeterminantOfGrowthPoints.DetermineGrowthPoint(_lastPosition, _fieldGenerator, this);
-            Fractal fractal = new Fractal(_fieldGenerator,newInitialPoint,_colorOfFractal,_fractalPopulation);
+            Vector newInitialPoint = DeterminantOfGrowthPoints.DetermineGrowthPoint(_lastPosition, _fractalModel, this);
+            Fractal fractal = new Fractal(_fractalModel, _fieldGenerator, newInitialPoint, _colorOfFractal, _fractalPopulation);
             _fractalPopulation.AddFractal(fractal);
         }
 
@@ -77,7 +75,7 @@ namespace Fractals.DrawFractal
                 StateOfFractal = StateOfFractal.Dead;
             else
             {
-                Vector nextPoint = DeterminantOfGrowthPoints.DetermineGrowthPoint(_lastPosition, _fieldGenerator, this);
+                Vector nextPoint = DeterminantOfGrowthPoints.DetermineGrowthPoint(_lastPosition, _fractalModel, this);
                 if (nextPoint == null)
                     StateOfFractal = StateOfFractal.Dead;
                 else

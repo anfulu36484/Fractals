@@ -24,32 +24,30 @@ using System.Windows.Shapes;
 namespace Fractals
 {
 
-    public delegate void GetResult(System.Drawing.Color[,] field);
-
-
+    
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
 
-        private DataManager _dataManager;
+        private Model.FractalModel _fractalModel;
 
         public MainWindow()
         {
             InitializeComponent();
-            _dataManager = new DataManager(this);
+            _fractalModel = new Model.FractalModel(this);
         }
 
 
         private void Start_Button_Click(object sender, RoutedEventArgs e)
         {
-            _dataManager.Start();
+            _fractalModel.Start();
         }
 
         private void Stop_Button_Click(object sender, RoutedEventArgs e)
         {
-            _dataManager.Stop();
+            _fractalModel.Stop();
         }
 
         private void OpenWindowSettings(object sender, RoutedEventArgs e)

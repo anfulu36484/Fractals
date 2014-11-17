@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-
-namespace Fractals.DrawFractal
+namespace Fractals.Model.DrawFractal
 {
     static class DeterminantOfGrowthPoints
     {
@@ -108,9 +104,9 @@ namespace Fractals.DrawFractal
         /// Если точек с минимальной плотностью несколько, то случайным образом выберим одну.
         /// </summary>
         /// <returns></returns>
-        static Vector SelectionOfOlyOnePointOfCollection(List<Vector> input, FieldGenerator fieldGenerator)
+        static Vector SelectionOfOlyOnePointOfCollection(List<Vector> input, FractalModel fractalModel)
         {
-            return input[fieldGenerator.Rand.Next(input.Count)];
+            return input[fractalModel.Rand.Next(input.Count)];
         }
 
         
@@ -119,20 +115,20 @@ namespace Fractals.DrawFractal
         /// Определение точки роста
         /// </summary>
         /// <returns></returns>
-        public static Vector DetermineGrowthPoint(Vector initialPoint, FieldGenerator fieldGenerator, Fractal fractal)
+        public static Vector DetermineGrowthPoint(Vector initialPoint, FractalModel fractalModel, Fractal fractal)
         {
             //Получаем координаты всех ячеек в диапазоне от n-1 до n+1 кроме точки {n, n}
             List<Vector> coordinatеsAllTheCells = GetCoordinatеsAllTheCells(initialPoint, fractal);
             //Отфильтровываем коордианты, лежашие за предеолами поля
-            List<Vector> coordinatesLieOutsideOfField = RemoveTheCoordinatesLieOutsideOfField(coordinatеsAllTheCells,fieldGenerator);
+            List<Vector> coordinatesLieOutsideOfField = RemoveTheCoordinatesLieOutsideOfField(coordinatеsAllTheCells, fractalModel.FieldGenerator);
 
-            if (CheckingConditionStoppingGrowth(coordinatesLieOutsideOfField,fieldGenerator,fractal) == StateOfFractal.Live)
+            if (CheckingConditionStoppingGrowth(coordinatesLieOutsideOfField, fractalModel.FieldGenerator, fractal) == StateOfFractal.Live)
             {
-                List<Vector> coordinatesWithLowesDensity = FindTheCoordinatesWithLowesDensity(coordinatesLieOutsideOfField,fieldGenerator);
+                List<Vector> coordinatesWithLowesDensity = FindTheCoordinatesWithLowesDensity(coordinatesLieOutsideOfField, fractalModel.FieldGenerator);
                 if (coordinatesWithLowesDensity.Count == 1)
                     return coordinatesWithLowesDensity[0];
                 else
-                    return SelectionOfOlyOnePointOfCollection(coordinatesWithLowesDensity,fieldGenerator);
+                    return SelectionOfOlyOnePointOfCollection(coordinatesWithLowesDensity, fractalModel);
             }
             else
             {

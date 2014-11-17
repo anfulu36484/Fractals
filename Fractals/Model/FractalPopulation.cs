@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using Fractals.DrawFractal;
+using Fractals.Model.DrawFractal;
 
-namespace Fractals
+namespace Fractals.Model
 {
     class FractalPopulation
     {
@@ -17,11 +12,11 @@ namespace Fractals
 
         public List<Fractal> Fractals { get { return _fractals; } } 
 
-        private FieldGenerator _fieldGenerator;
+        private FractalModel _fractalModel;
 
-        public FractalPopulation(FieldGenerator fieldGenerator)
+        public FractalPopulation(FractalModel fractalModel)
         {
-            _fieldGenerator = fieldGenerator;
+            _fractalModel = fractalModel;
         }
 
 
@@ -32,10 +27,11 @@ namespace Fractals
         public void GenerateInitialFractals()
         {
             _fractals = Enumerable.Range(0, _initialCountOfFractals)
-                .Select(n => new Fractal(_fieldGenerator,
-                                        new Vector(_fieldGenerator.Rand.Next(_fieldGenerator.DimensionField),
-                                             _fieldGenerator.Rand.Next(_fieldGenerator.DimensionField)),
-                                        Settings.RandomColor.GenerateColor(_fieldGenerator.Rand),
+                .Select(n => new Fractal(_fractalModel,
+                                         _fractalModel.FieldGenerator,
+                                        new Vector(_fractalModel.Rand.Next(_fractalModel.FieldGenerator.DimensionField),
+                                             _fractalModel.Rand.Next(_fractalModel.FieldGenerator.DimensionField)),
+                                        Settings.RandomColor.GenerateColor(_fractalModel.Rand),
                                         this))
                  .ToList();
 

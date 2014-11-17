@@ -7,23 +7,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using Fractals.Model;
 
-
-namespace Fractals
+namespace Fractals.DataCollector
 {
-    class BMPVisualizer
+    class DataVisualizer:DataDistributor
     {
         private MainWindow _mainWindow;
 
-        public BMPVisualizer(MainWindow mainWindow)
+        public DataVisualizer(MainWindow mainWindow)
         {
             _mainWindow = mainWindow;
         }
 
-
         Bitmap CreateBMPImage(Color[,] field)
         {
-            Bitmap image= new Bitmap(field.GetLength(0),field.GetLength(1));
+            Bitmap image = new Bitmap(field.GetLength(0), field.GetLength(1));
             for (int x = 0; x < field.GetLength(0); x++)
             {
                 for (int y = 0; y < field.GetLength(1); y++)
@@ -66,5 +65,9 @@ namespace Fractals
             DrawImage(image);
         }
 
+        public override void GetData(Color[,] data)
+        {
+            DisplayImage(data);
+        }
     }
 }

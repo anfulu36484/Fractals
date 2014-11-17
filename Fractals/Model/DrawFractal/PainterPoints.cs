@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 
-namespace Fractals.DrawFractal
+namespace Fractals.Model.DrawFractal
 {
     class PainterOfPoints
     {

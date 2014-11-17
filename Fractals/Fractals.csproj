@@ -56,24 +56,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DataManager.cs" />
-    <Compile Include="DrawFractal\DeterminantOfCircularNeighborhoods.cs" />
-    <Compile Include="DrawFractal\DeterminantOfGrowthPoints.cs" />
-    <Compile Include="DrawFractal\StateOfFractal.cs" />
-    <Compile Include="FractalPopulation.cs" />
-    <Compile Include="DrawFractal\PainterPoints.cs" />
+    <Compile Include="Controller.cs" />
+    <Compile Include="DataCollector\DataBDSaver.cs" />
+    <Compile Include="DataCollector\DataDistributor .cs" />
+    <Compile Include="DataCollector\DataVisualizer.cs" />
+    <Compile Include="Model\FractalModel.cs" />
+    <Compile Include="Model\DrawFractal\DeterminantOfCircularNeighborhoods.cs" />
+    <Compile Include="Model\DrawFractal\DeterminantOfGrowthPoints.cs" />
+    <Compile Include="Model\DrawFractal\StateOfFractal.cs" />
+    <Compile Include="Model\FractalPopulation.cs" />
+    <Compile Include="Model\DrawFractal\PainterPoints.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="GeneratorOfRandomColor.cs" />
+    <Compile Include="Model\GeneratorOfRandomColor.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Statistics.cs" />
-    <Compile Include="Vector.cs" />
+    <Compile Include="DataCollector\Statistics.cs" />
+    <Compile Include="Model\Vector.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -82,9 +86,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BMPVisualizer.cs" />
-    <Compile Include="FieldGenerator.cs" />
-    <Compile Include="DrawFractal\Fractal.cs" />
+    <Compile Include="Model\FieldGenerator.cs" />
+    <Compile Include="Model\DrawFractal\Fractal.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -118,6 +121,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
