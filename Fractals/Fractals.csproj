@@ -59,6 +59,7 @@
     <Compile Include="Controller.cs" />
     <Compile Include="DataCollector\DataBDSaver.cs" />
     <Compile Include="DataCollector\DataDistributor .cs" />
+    <Compile Include="DataCollector\DataFrame.cs" />
     <Compile Include="DataCollector\DataVisualizer.cs" />
     <Compile Include="Model\FractalModel.cs" />
     <Compile Include="Model\DrawFractal\DeterminantOfCircularNeighborhoods.cs" />

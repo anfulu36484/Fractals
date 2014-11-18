@@ -1,7 +1,4 @@
-﻿//На основе:
-//http://stackoverflow.com/questions/625029/how-do-i-store-and-retrieve-a-blob-from-sqlite
-
-using System;
+﻿using System;
 using System.Drawing;
 using System.Threading;
 using Fractals.DataCollector;
@@ -18,6 +15,7 @@ namespace Fractals.Model
         private Thread _thread;
         private DataDistributor _dataVisualizer;
         private DataDistributor _statistics;
+        private DataDistributor _dataBDSaver;
 
         private Random _random;
 
@@ -41,7 +39,7 @@ namespace Fractals.Model
             _fieldGenerator = new FieldGenerator(_fractalPopulation, Settings.SizeOfField);
             _statistics = new Statistics(_fractalPopulation, mainWindow);
             _dataVisualizer = new DataVisualizer(mainWindow);
-
+            _dataBDSaver = new DataBDSaver();
         }
 
     
@@ -54,6 +52,7 @@ namespace Fractals.Model
         {
             GetResult getResult = _dataVisualizer.GetData;
             getResult += _statistics.GetData;
+            getResult += _dataBDSaver.GetData;
             FieldGenerator.Generate(getResult);
         }
 

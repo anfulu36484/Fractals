@@ -8,7 +8,7 @@ using Fractals.Model.DrawFractal;
 
 namespace Fractals
 {
-    static class Settings
+    public static class Settings
     {
         /// <summary>
         /// Размер поля. Ширина = Высота = SizeOfField
@@ -52,6 +52,11 @@ namespace Fractals
             MinBlue = 0,
             MaxBlue = 0
         };
+
+        /// <summary>
+        /// Имя файла, в котором будут храниться результаты вычислений
+        /// </summary>
+        public static string NameOfBDFile = @"D:\С_2013\Fractals\Data\picBD.db3";
 
 
     }

@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Fractals.Model
 {
-    class GeneratorOfRandomColor
+    public class GeneratorOfRandomColor
     {
         public int MinRed;
         public int MaxRed;

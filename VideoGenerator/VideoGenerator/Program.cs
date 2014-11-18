@@ -2,23 +2,64 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SQLite;
 using System.Linq;
 using System.Net.Mime;
 using System.Text;
-//using AForge.Video.FFMPEG;
 using System.IO;
 using System.Drawing;
 using AForge.Video.FFMPEG;
+using Fractals.DataCollector;
+using Fractals;
+
 
 namespace VideoGenerator
 {
     class Program
     {
 
+        static byte[] GetBytes(SQLiteDataReader reader)
+        {
+            const int CHUNK_SIZE = 2 * 1024;
+            byte[] buffer = new byte[CHUNK_SIZE];
+            long bytesRead;
+            long fieldOffset = 0;
+            using (MemoryStream stream = new MemoryStream())
+            {
+                while ((bytesRead = reader.GetBytes(0, fieldOffset, buffer, 0, buffer.Length)) > 0)
+                {
+                    stream.Write(buffer, 0, (int)bytesRead);
+                    fieldOffset += bytesRead;
+                }
+                return stream.ToArray();
+            }
+        }
 
         static void Main(string[] args)
         {
-            int width = 600;
+
+            using (var connection = new SQLiteConnection(string.Format("Data Source={0};Version=3",Settings.NameOfBDFile)))
+            using (var command = new SQLiteCommand(connection))
+            {
+                connection.Open();
+
+
+                command.CommandText = "SELECT PHOTO FROM PHOTOS WHERE ID = 1";
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        byte[] buffer = GetBytes(reader);
+                        Console.Write(buffer);
+                    }
+                }
+
+            }
+
+
+
+            /*int width = 600;
             int height = 600;
 
             VideoFileWriter writer = new VideoFileWriter();
@@ -44,7 +85,7 @@ namespace VideoGenerator
                 writer.WriteVideoFrame(bitmap);
             }
 
-            writer.Close();
+            writer.Close();*/
         }
     }
 }
