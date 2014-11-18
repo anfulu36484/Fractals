@@ -29,7 +29,7 @@ namespace Fractals.DataCollector
             _sQLiteCommand =new SQLiteCommand(_sqLiteConnection);
             ConnectionOpen();
             CreateDataTable();
-            _sQLiteCommand.CommandText = "INSERT INTO FRAMES (FRAME) VALUES (@frame)";
+            _sQLiteCommand.CommandText = "INSERT INTO FRAMES (I, J, R, G, B) VALUES ( @I, @J, @R, @G, @B)";
         }
 
         void deleteTheOldBDFile()
@@ -47,7 +47,7 @@ namespace Fractals.DataCollector
 
         void CreateDataTable()
         {
-            _sQLiteCommand.CommandText = "CREATE TABLE FRAMES(ID INTEGER PRIMARY KEY AUTOINCREMENT, FRAME BLOB)";
+            _sQLiteCommand.CommandText = "CREATE TABLE FRAMES(ID INTEGER PRIMARY KEY AUTOINCREMENT, I INTEGER, J INTEGER, R INTEGER, G INTEGER, B INTEGER)";
             _sQLiteCommand.ExecuteNonQuery();
         }
 
@@ -59,26 +59,23 @@ namespace Fractals.DataCollector
 
 
 
-
-        byte[] SerializableDataFrame(DataFrame dataFrame)
-        {
-            MemoryStream memoryStream;
-            using (memoryStream= new MemoryStream())
-            {
-                binFormat.Serialize(memoryStream, dataFrame);
-            }
-            return memoryStream.ToArray();
-        }
-
-
         private int x = 0;
 
         public override void GetData(Color[,] data)
         {
-            byte[] dataFrame = SerializableDataFrame(new DataFrame(data));
+            for (int i = 0; i < data.GetLength(0); i++)
+            {
+                for (int j = 0; j < data.GetLength(1); j++)
+                {
+                    _sQLiteCommand.Parameters.Add("@I", DbType.Int16).Value = i;
+                    _sQLiteCommand.Parameters.Add("@J", DbType.Int16).Value = j;
+                    _sQLiteCommand.Parameters.Add("@R", DbType.Int16).Value = data[i,j].R;
+                    _sQLiteCommand.Parameters.Add("@G", DbType.Int16).Value = data[i, j].G;
+                    _sQLiteCommand.Parameters.Add("@B", DbType.Int16).Value = data[i, j].B;
+                    _sQLiteCommand.ExecuteNonQuery();
+                }
+            }
             
-            _sQLiteCommand.Parameters.Add("@frame", DbType.Binary, 20).Value = dataFrame;
-            _sQLiteCommand.ExecuteNonQuery();
             x++;
             if (x > 10)
                 ConnectionClose();
