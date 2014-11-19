@@ -10,8 +10,8 @@ using System.Text;
 using System.IO;
 using System.Drawing;
 using AForge.Video.FFMPEG;
-using Fractals.DataCollector;
-using Fractals;
+using System.Data.SQLite;
+
 
 
 namespace VideoGenerator
@@ -39,13 +39,15 @@ namespace VideoGenerator
         static void Main(string[] args)
         {
 
-            using (var connection = new SQLiteConnection(string.Format("Data Source={0};Version=3",Settings.NameOfBDFile)))
+
+
+            using (var connection = new SQLiteConnection(string.Format("Data Source={0};Version=3", @"D:\С_2013\Fractals\Data\picBD.db3")))
             using (var command = new SQLiteCommand(connection))
             {
                 connection.Open();
 
 
-                command.CommandText = "SELECT PHOTO FROM PHOTOS WHERE ID = 1";
+                command.CommandText = "SELECT Frame FROM FRAMES WHERE ID = 1";
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())

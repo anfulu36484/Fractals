@@ -61,6 +61,7 @@
     <Compile Include="DataCollector\DataDistributor .cs" />
     <Compile Include="DataCollector\DataFrame.cs" />
     <Compile Include="DataCollector\DataVisualizer.cs" />
+    <Compile Include="DataCollector\ImageGenerator.cs" />
     <Compile Include="Model\FractalModel.cs" />
     <Compile Include="Model\DrawFractal\DeterminantOfCircularNeighborhoods.cs" />
     <Compile Include="Model\DrawFractal\DeterminantOfGrowthPoints.cs" />
