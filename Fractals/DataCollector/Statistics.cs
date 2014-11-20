@@ -17,10 +17,13 @@ namespace Fractals.DataCollector
             _mainWindow = mainWindow;
         }
 
+        public static int LiveFractals = 5;
+
         void GetCountLiveAndDeadFractals(ref int liveFractals, ref int deadFractals)
         {
             deadFractals = _fractalsPopulation.Fractals.Count(n => n.StateOfFractal == StateOfFractal.Dead);
             liveFractals = _fractalsPopulation.Fractals.Count - deadFractals;
+            LiveFractals = liveFractals;
         }
 
         public void ShowStatistics()

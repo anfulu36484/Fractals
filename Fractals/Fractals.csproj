@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite">
@@ -59,7 +63,6 @@
     <Compile Include="Controller.cs" />
     <Compile Include="DataCollector\DataBDSaver.cs" />
     <Compile Include="DataCollector\DataDistributor .cs" />
-    <Compile Include="DataCollector\DataFrame.cs" />
     <Compile Include="DataCollector\DataVisualizer.cs" />
     <Compile Include="DataCollector\ImageGenerator.cs" />
     <Compile Include="Model\FractalModel.cs" />

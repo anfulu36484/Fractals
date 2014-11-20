@@ -50,8 +50,12 @@ namespace Fractals.Model
         /// </summary>
         void Run()
         {
-            GetResult getResult = _dataVisualizer.GetData;
+            /*GetResult getResult = _dataVisualizer.GetData;
             getResult += _statistics.GetData;
+            getResult += _dataBDSaver.GetData;
+            FieldGenerator.Generate(getResult);*/
+
+            GetResult getResult = _statistics.GetData;
             getResult += _dataBDSaver.GetData;
             FieldGenerator.Generate(getResult);
         }

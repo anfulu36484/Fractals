@@ -13,12 +13,12 @@ namespace Fractals
         /// <summary>
         /// Размер поля. Ширина = Высота = SizeOfField
         /// </summary>
-        public static int SizeOfField = 300;
+        public static int SizeOfField = 600;
 
         /// <summary>
         /// Начальное количество фракталов
         /// </summary>
-        public static int InitialCountOfFractals = 3;
+        public static int InitialCountOfFractals = 4;
 
         /// <summary>
         /// Максимальная длина фрактала, после которой происходит раздвоение фрактала
@@ -28,12 +28,12 @@ namespace Fractals
         /// <summary>
         /// Параметр уравнения Гаусса, определяющий ширину распределения Гаусса
         /// </summary>
-        public static float Sigma = 5f;
+        public static float Sigma = 0.9f;
 
         /// <summary>
         /// Радиус окрестностей точки
         /// </summary>
-        public static int R=30;
+        public static int R=3;
 
         /// <summary>
         /// Уравнение для расчета z окрестностей точки
@@ -45,12 +45,12 @@ namespace Fractals
         /// </summary>
         public static GeneratorOfRandomColor RandomColor = new GeneratorOfRandomColor
         {
-            MinRed = 150,
+            MinRed = 10,
             MaxRed = 220,
             MinGreen = 0,
             MaxGreen = 0,
-            MinBlue = 0,
-            MaxBlue = 0
+            MinBlue = 10,
+            MaxBlue = 220
         };
 
         /// <summary>

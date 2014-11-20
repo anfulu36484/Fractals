@@ -59,17 +59,12 @@ namespace Fractals.DataCollector
         }
 
 
-
-        private int x = 0;
-
         public override void GetData(Color[,] data)
         {
             _sQLiteCommand.Parameters.Add("@Frame",DbType.Binary).Value=_imageGenerator.GenerateImage(data);
             _sQLiteCommand.ExecuteNonQuery();
 
-
-            x++;
-            if (x > 10)
+            if(Statistics.LiveFractals==0)
                 ConnectionClose();
         }
     }

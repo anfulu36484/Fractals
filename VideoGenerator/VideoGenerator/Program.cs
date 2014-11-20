@@ -41,8 +41,8 @@ namespace VideoGenerator
         static void Main(string[] args)
         {
             ImageBMPConvertor imageConv = new ImageBMPConvertor();
-            int width = 300;
-            int height = 300;
+            int width = 600;
+            int height = 600;
 
 
             VideoFileWriter writer = new VideoFileWriter();
