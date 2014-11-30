@@ -78,7 +78,6 @@ namespace VideoGenerator
                     bitmap.SetPixel(i,j,Color.FromArgb(R,G,B));
                 }
             }
-            bitmap.Save("test.bmp");
             return bitmap;
         }
 
