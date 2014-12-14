@@ -19,7 +19,7 @@ namespace MusicGenerator.Patterns
         /// </summary>
         /// <param name="countOfNotes">Количество нот, образующих паттерн</param>
         /// <param name="playingTime">Время проигрывания паттерна</param>
-        public AtomicSoundPattern(int countOfNotes, uint playingTime)
+        public AtomicSoundPattern(int countOfNotes, UInt16 playingTime)
             : base(playingTime)
         {
             _countOfNotes = countOfNotes;
@@ -27,7 +27,7 @@ namespace MusicGenerator.Patterns
             _timesOfInitialPlayingOfNotes = new uint[countOfNotes];
         }
 
-        void ValidateData(Note note, uint timeOfInitialPlayingOfNote)
+        void ValidateData(Note note, UInt16 timeOfInitialPlayingOfNote)
         {
             if (_notes.Length > _countOfNotes)
                 throw new Exception(string.Format("Нот не может быть больше {0}.",_countOfNotes));
@@ -35,7 +35,7 @@ namespace MusicGenerator.Patterns
                 throw new Exception("Временной интервал проигрывания ноты превышает интервал проигрывания паттерна.");
         }
 
-        public void AddNote(Note note, uint timeOfInitialPlayingOfNote)
+        public void AddNote(Note note, UInt16 timeOfInitialPlayingOfNote)
         {
             ValidateData(note, timeOfInitialPlayingOfNote);
             _notes[_position] = note;

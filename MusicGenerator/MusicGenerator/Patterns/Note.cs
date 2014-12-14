@@ -17,7 +17,7 @@ namespace MusicGenerator.Patterns
         /// <summary>
         /// Продолжительность звучания
         /// </summary>
-        private uint _playingTime;
+        private UInt16 _playingTime;
 
         /// <summary>
         /// Скорость нажатия клавиши 0 до 127 (Параметр, определяющий усиление ноты, чем он больше тем звук громче)
@@ -42,7 +42,7 @@ namespace MusicGenerator.Patterns
         /// <summary>
         /// Продолжительность звучания
         /// </summary>
-        public uint PlayingTime
+        public UInt16 PlayingTime
         {
             get { return _playingTime; }
             private set { _playingTime = value; }
@@ -68,7 +68,7 @@ namespace MusicGenerator.Patterns
         /// <param name="numberOfNote">Номер ноты от 0 до 127</param>
         /// <param name="playingTime">Продолжительность звучания</param>
         /// <param name="velocity">Скорость нажатия клавиши 0 до 127</param>
-        public Note(byte numberOfNote, uint playingTime, byte velocity)
+        public Note(byte numberOfNote, UInt16 playingTime, byte velocity)
         {
             NumberOfNote = numberOfNote;
             PlayingTime = playingTime;

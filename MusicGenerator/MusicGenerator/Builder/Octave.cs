@@ -11,6 +11,16 @@ namespace MusicGenerator.Builder
             _random = random;
         }
 
+        public byte CountOfNotesInOctave(byte numberOfOctave)
+        {
+            if (numberOfOctave > 10)
+                throw new Exception("Количество октав не может превышать десяти");
+            if (numberOfOctave == 10)
+                return 8;
+            return 12;
+        }
+
+
         /// <summary>
         /// Выбрать случайный номер ноты из октавы
         /// </summary>

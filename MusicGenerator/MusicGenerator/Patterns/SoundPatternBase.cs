@@ -1,4 +1,6 @@
-﻿namespace MusicGenerator.Patterns
+﻿using System;
+
+namespace MusicGenerator.Patterns
 {
     class SoundPatternBase
     {
@@ -6,7 +8,7 @@
         /// <summary>
         /// Продолжительность звучания
         /// </summary>
-        private uint _playingTime;
+        private UInt16 _playingTime;
 
         
         private double _density;
@@ -15,7 +17,7 @@
         /// <summary>
         /// Продолжительность звучания
         /// </summary>
-        public uint PlayingTime
+        public UInt16 PlayingTime
         {
             get { return _playingTime; }
             private set { _playingTime = value; }
@@ -31,10 +33,9 @@
             private set { _density = value; }
         }
 
-        protected SoundPatternBase(uint playingTime)
+        protected SoundPatternBase(UInt16 playingTime)
         {
             PlayingTime = playingTime;
-
         }
 
     }
