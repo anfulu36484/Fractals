@@ -7,7 +7,7 @@ using MusicGenerator.Patterns;
 
 namespace MusicGenerator.Builder
 {
-    class AtomicSoundPatternBuilder
+    partial class AtomicSoundPatternBuilder
     {
 
         private UInt16 _playingTime;
@@ -37,13 +37,15 @@ namespace MusicGenerator.Builder
             return (int)(absoluteContent*relativeCountOfNotes);
         }
 
-
+ 
+        
         #region Создание новой ноты
 
 
 
         Note GenerateNote(byte numberOfOctave, int absoluteCountOfNotes)
         {
+
             //Случайным образом выбираем ноту из октавы
             byte numberOfNote = _octave.ChooseRandomNumberOfNoteFromOctave(numberOfOctave);
             
