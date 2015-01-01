@@ -43,12 +43,13 @@
   <ItemGroup>
     <Compile Include="Builder\AtomicSoundPatternBuilder.cs" />
     <Compile Include="Builder\MusicBuilder.cs" />
-    <Compile Include="Builder\NoteSpace.cs" />
+    <Compile Include="Builder\NoteSpaceBuilder.cs" />
     <Compile Include="Builder\NoteSpaceStatus.cs" />
     <Compile Include="Builder\Range.cs" />
     <Compile Include="Patterns\AtomicSoundPattern.cs" />
     <Compile Include="Patterns\Note.cs" />
     <Compile Include="Builder\Octave.cs" />
+    <Compile Include="Patterns\NoteSpace.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Patterns\SoundPattern.cs" />

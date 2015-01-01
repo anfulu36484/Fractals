@@ -17,9 +17,9 @@ namespace Tests
         public void SelectionOfTheMaxSpaceBetweenFilledPartOfSpaceTest()
         {
             Random random = new Random();
-            NoteSpace noteSpace = new NoteSpace(20,random);
+            NoteSpaceBuilder noteSpaceBuilder = new NoteSpaceBuilder(20,random);
 
-            PrivateObject privateObject = new PrivateObject(noteSpace);
+            PrivateObject privateObject = new PrivateObject(noteSpaceBuilder);
             int startPart;
             int endPart;
             object obj = privateObject.Invoke("SelectionOfTheMaxSpaceBetweenFilledPartOfSpace", out startPart, out endPart);

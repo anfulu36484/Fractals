@@ -3,55 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MusicGenerator.Patterns;
 
 namespace MusicGenerator.Builder
 {
 
-    public class NoteSpace
+    class NoteSpaceBuilder
     {
-        /// <summary>
-        ///Нотное пространство
-        ///Значение false - пустая часть нотного пространства
-        /// true - заполненная часть
-        /// </summary>
-        private bool[] _partsOfTheSpaceNote;
-
-        /// <summary>
-        /// Нотное пространство
-        ///Значение false - пустая часть нотного пространства
-        /// true - заполненная часть
-        /// </summary>
-        public bool[] PartsOfTheSpaceNote
-        {
-            get { return _partsOfTheSpaceNote; }
-        }
+        private NoteSpace _noteSpace;
 
         private Random _random;
 
-        public NoteSpace(UInt16 playingTime, Random random)
+        public NoteSpaceBuilder(Random random)
         {
-            //Создаем пустое нотное пространство
-            _partsOfTheSpaceNote = new bool[playingTime];
-
-            //Создаем массив разделителей нотного пространства
-            _dividers = new bool[playingTime];
             _random = random;
         }
-
-        /// <summary>
-        /// Проверка заполненности нотного пространства
-        /// </summary>
-        /// <returns></returns>
-        public NoteSpaceStatus CheckingFilledSpace()
-        {
-            for (int i = 0; i < _partsOfTheSpaceNote.Length; i++)
-            {
-                if (_partsOfTheSpaceNote[i])
-                    return NoteSpaceStatus.Filled;
-            }
-            return NoteSpaceStatus.Empty;
-        }
-
 
         #region Заполнение нотного пространства
 
@@ -136,7 +102,7 @@ namespace MusicGenerator.Builder
             int iDirection = (int) direction;
             for (int i = startPointPlay; i != partOnWhichToEndFilling; i += iDirection)
             {
-                _partsOfTheSpaceNote[i] = true;
+                _noteSpace.PartsOfTheSpaceNote[i] = true;
             }
         }
 
@@ -167,7 +133,7 @@ namespace MusicGenerator.Builder
         private void FilledEmptyNoteSpace(int maxNumberOfAvailableParts)
         {
             int startPart = 0;
-            int endPart = _partsOfTheSpaceNote.Length;
+            int endPart = _noteSpace.PartsOfTheSpaceNote.Length;
             Filled(startPart, endPart, maxNumberOfAvailableParts);
         }
 
@@ -177,12 +143,24 @@ namespace MusicGenerator.Builder
 
         #region Пространство ноты частично заполненное
 
+
+
+
+
+        enum TypeOfSpace
+        {
+            Filled = 1,
+            Unfilled = 0
+        }
+
         /// <summary>
-        /// Выбор максимального пустого пространства между заполненными часями нотного пространства
+        /// Выбор наибольшего участока пустого нотного пространства
+        /// либо наибольшего участока заполненного нотного пространства
         /// </summary>
-        /// <param name="startPart">Начальная точка пустого пространства</param>
-        /// <param name="endPart">Конечная точка пустого пространства</param>
-        private void SelectionOfTheMaxSpaceBetweenFilledPartOfSpace(out int startPart, out int endPart)
+        /// <param name="startPart">Начальная точка пустого|заполненного пространства </param>
+        /// <param name="endPart">Конечная точка пустого|заполненного пространства</param>
+        /// <param name="typeOfSpace">Тип нотного пространства</param>
+        private void SelectionOfTheMaxSpace(out int startPart, out int endPart, TypeOfSpace typeOfSpace)
         {
             int sizeOfEmptySpaceTemp;
             int startPartTemp = -1;
@@ -193,22 +171,23 @@ namespace MusicGenerator.Builder
 
             int sizeOfEmptySpace = 0;
 
+            bool typeOFSpace = Convert.ToBoolean((int)typeOfSpace);
 
-            if (_partsOfTheSpaceNote[0])
+            if (_noteSpace.PartsOfTheSpaceNote[0] == !typeOFSpace)
             {
                 startPartTemp = 0;
                 startPart = 0;
             }
 
 
-            for (int i = 1; i < _partsOfTheSpaceNote.Length; i++)
+            for (int i = 1; i < _noteSpace.PartsOfTheSpaceNote.Length; i++)
             {
-                if (_partsOfTheSpaceNote[i - 1] == false & _partsOfTheSpaceNote[i])
+                if (_noteSpace.PartsOfTheSpaceNote[i - 1] == typeOFSpace & _noteSpace.PartsOfTheSpaceNote[i] == !typeOFSpace)
                 {
                     startPartTemp = i;
                     continue;
                 }
-                if (_partsOfTheSpaceNote[i - 1] & _partsOfTheSpaceNote[i] == false)
+                if (_noteSpace.PartsOfTheSpaceNote[i - 1] & _noteSpace.PartsOfTheSpaceNote[i] == typeOFSpace)
                 {
                     endPartTemp = i - 1;
                     sizeOfEmptySpaceTemp = startPartTemp - endPartTemp + 1;
@@ -234,7 +213,7 @@ namespace MusicGenerator.Builder
         {
             int startPart;
             int endPart;
-            SelectionOfTheMaxSpaceBetweenFilledPartOfSpace(out startPart, out endPart);
+            SelectionOfTheMaxSpace(out startPart, out endPart, TypeOfSpace.Unfilled);
             Filled(startPart, endPart, maxNumberOfAvailableParts);
         }
 
@@ -245,9 +224,10 @@ namespace MusicGenerator.Builder
         /// Заполнить нотное пространство случайным образом
         /// </summary>
         /// <param name="maxNumberOfAvailableParts"></param>
-        public void FilledNoteSpace(int maxNumberOfAvailableParts)
+        public void FilledNoteSpace(NoteSpace noteSpace, int maxNumberOfAvailableParts)
         {
-            if (CheckingFilledSpace() == NoteSpaceStatus.Empty)
+            _noteSpace = noteSpace;
+            if (_noteSpace.CheckingFilledSpace() == NoteSpaceStatus.Empty)
                 FilledEmptyNoteSpace(maxNumberOfAvailableParts);
             else
                 FilledPartiallyFilledNoteSpace(maxNumberOfAvailableParts);
@@ -261,37 +241,43 @@ namespace MusicGenerator.Builder
 
         #region Деление крупных частей заполненного нотного пространства на блоки
 
-        /// <summary>
-        ///Массив разделителей заполненного нотного пространства
-        ///Значение _dividers[i] = false указывает на отсутствие разделителя между частями пространства
-        /// _dividers[i] = true указывает на присутсвие разделителя между _partsOfTheSpaceNote[i] и _partsOfTheSpaceNote[i+1]
-        /// </summary>
-        private bool[] _dividers;
 
         /// <summary>
-        ///Массив разделителей заполненного нотного пространства
-        ///Значение _dividers[i] = false указывает на отсутствие разделителя между частями пространства
-        /// _dividers[i] = true указывает на присутсвие разделителя между _partsOfTheSpaceNote[i] и _partsOfTheSpaceNote[i+1]
+        /// Определить случайную точку разрыва
         /// </summary>
-        public bool[] Dividers
+        int DefinitionOfDividePoint(int startPart, int endPart)
         {
-            get { return _dividers; } 
+            return _random.Next(startPart + 1, endPart - 1);
         }
 
+        void DivideSpace(int dividePoint)
+        {
+            _noteSpace.Dividers[dividePoint] = true;
+            if (DeterminRandomDirection() == Direction.Right)
+                _noteSpace.Dividers[dividePoint + 1] = true;
+            else
+                _noteSpace.Dividers[dividePoint - 1] = true;
+        }
 
         /// <summary>
-        /// Найти наиболее большой участок заполненного нотного пространства
+        /// Разделить заполненное нотное пространство
         /// </summary>
-        /// <param name="startPlay">Начальная точка проигрывания наибольшего участка</param>
-        /// <param name="endPlay">Окончание проигрывания наибольшего участка</param>
-        /*void FindTheBiggestSiteOfFilledNoteSpace(out int startPlay, out int endPlay)
+        /// <remarks>
+        /// Пример:
+        /// file:///D:/%D0%A1_2013/Fractals/MusicGenerator/MusicGenerator/Builder/images/NoteSpaceBuilder/DivideTheFilledNoteSpace.png
+        /// </remarks>
+        public void DivideTheFilledNoteSpace()
         {
-                
-        }*/
+            //Нахождение наиболее заполненного участока нотного пространства
+            int startPart;
+            int endPart;
+            SelectionOfTheMaxSpace(out startPart, out endPart, TypeOfSpace.Filled); 
 
-        public void DivideTheFilledMusicalSpace()
-        {
-                
+            if (startPart-endPart<2)
+                throw new Exception(string.Format("Невозможно разбить заполненное нотное пространство на части. startPart = {0} endPart = {1}",startPart, endPart));
+            
+            DivideSpace(DefinitionOfDividePoint(startPart, endPart));
+
         }
 
         #endregion
