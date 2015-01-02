@@ -8,7 +8,7 @@ using MusicGenerator.Patterns;
 namespace MusicGenerator.Builder
 {
 
-    class NoteSpaceBuilder
+    internal class NoteSpaceBuilder
     {
         private NoteSpace _noteSpace;
 
@@ -147,7 +147,7 @@ namespace MusicGenerator.Builder
 
 
 
-        enum TypeOfSpace
+        private enum TypeOfSpace
         {
             Filled = 1,
             Unfilled = 0
@@ -171,7 +171,7 @@ namespace MusicGenerator.Builder
 
             int sizeOfEmptySpace = 0;
 
-            bool typeOFSpace = Convert.ToBoolean((int)typeOfSpace);
+            bool typeOFSpace = Convert.ToBoolean((int) typeOfSpace);
 
             if (_noteSpace.PartsOfTheSpaceNote[0] == !typeOFSpace)
             {
@@ -182,7 +182,8 @@ namespace MusicGenerator.Builder
 
             for (int i = 1; i < _noteSpace.PartsOfTheSpaceNote.Length; i++)
             {
-                if (_noteSpace.PartsOfTheSpaceNote[i - 1] == typeOFSpace & _noteSpace.PartsOfTheSpaceNote[i] == !typeOFSpace)
+                if (_noteSpace.PartsOfTheSpaceNote[i - 1] == typeOFSpace &
+                    _noteSpace.PartsOfTheSpaceNote[i] == !typeOFSpace)
                 {
                     startPartTemp = i;
                     continue;
@@ -234,23 +235,18 @@ namespace MusicGenerator.Builder
         }
 
 
-        //Увеличить содержание за счет приращения заполненного нотного пространства 
-
-
-
-
         #region Деление крупных частей заполненного нотного пространства на блоки
 
 
         /// <summary>
         /// Определить случайную точку разрыва
         /// </summary>
-        int DefinitionOfDividePoint(int startPart, int endPart)
+        private int DefinitionOfDividePoint(int startPart, int endPart)
         {
             return _random.Next(startPart + 1, endPart - 1);
         }
 
-        void DivideSpace(int dividePoint)
+        private void DivideSpace(int dividePoint)
         {
             _noteSpace.Dividers[dividePoint] = true;
             if (DeterminRandomDirection() == Direction.Right)
@@ -271,14 +267,90 @@ namespace MusicGenerator.Builder
             //Нахождение наиболее заполненного участока нотного пространства
             int startPart;
             int endPart;
-            SelectionOfTheMaxSpace(out startPart, out endPart, TypeOfSpace.Filled); 
+            SelectionOfTheMaxSpace(out startPart, out endPart, TypeOfSpace.Filled);
 
-            if (startPart-endPart<2)
-                throw new Exception(string.Format("Невозможно разбить заполненное нотное пространство на части. startPart = {0} endPart = {1}",startPart, endPart));
-            
+            if (startPart - endPart < 2)
+                throw new Exception(
+                    string.Format(
+                        "Невозможно разбить заполненное нотное пространство на части. startPart = {0} endPart = {1}",
+                        startPart, endPart));
+
             DivideSpace(DefinitionOfDividePoint(startPart, endPart));
 
         }
+
+        #endregion
+
+        #region Увеличить содержание за счет приращения заполненного нотного пространства
+
+       
+
+        bool IsPossibleToIncrement()
+        {
+            for (int i = 0; i < _noteSpace.PartsOfTheSpaceNote.Length; i++)
+            {
+                if (_noteSpace.PartsOfTheSpaceNote[i] == false)
+                    return true;
+            }
+            return false;
+        }
+
+
+        int FindEmptyPart(int part1, int part2)
+        {
+            return _noteSpace.PartsOfTheSpaceNote[part1] == false ? part1 : part2;
+        }
+
+        /// <summary>
+        /// Найти части за счет которых возможно прирастить заполненные блоки частей
+        /// </summary>
+        /// <returns></returns>
+        List<int> FindCapableOfIncrementParts()
+        {
+            List<int> partsCapableOfIncrement = new List<int>();
+
+            for (int i = 1; i < _noteSpace.PartsOfTheSpaceNote.Length; i++)
+            {
+                if (_noteSpace.PartsOfTheSpaceNote[i - 1] != _noteSpace.PartsOfTheSpaceNote[i])
+                {
+                    int emptyPart = FindEmptyPart(i - 1, i);
+                    if(emptyPart>partsCapableOfIncrement.Last())
+                        partsCapableOfIncrement.Add(emptyPart);
+                }
+            }
+            return partsCapableOfIncrement;
+        }
+
+        /// <summary>
+        /// Выбрать одну пустую часть из массива кандидатов на приращение
+        /// </summary>
+        int SelectOfRandomCapableOfIncrementPart(List<int> partsCapableOfIncrement)
+        {
+            return _random.Next(0, partsCapableOfIncrement.Count - 1);
+        }
+
+
+        /// <summary>
+        /// Прирастить случайный блок заполненного нотного пространства на одну часть
+        /// </summary>
+        public void IncrementPerUnit()
+        {
+            //Проверка: возможно ли вообще совершить приращение
+            if(!IsPossibleToIncrement())
+                throw new Exception("Приращение совершить невозможно поскольку нет пустных частей нотного пространства.");
+
+            int capableOfIncrementPart = SelectOfRandomCapableOfIncrementPart(FindCapableOfIncrementParts());
+            
+            _noteSpace.PartsOfTheSpaceNote[capableOfIncrementPart] = true;//"Прирастить"
+
+            //В случае, если произошло объедиенение двух заполненных блоков частей нотного пространства в результате приращения
+            //установить разделитель блоков
+
+            if (_noteSpace.PartsOfTheSpaceNote[capableOfIncrementPart - 1] &
+                _noteSpace.PartsOfTheSpaceNote[capableOfIncrementPart + 1])
+                DivideSpace(capableOfIncrementPart);
+        }
+
 
         #endregion
     }
