@@ -47,7 +47,6 @@
     <Compile Include="Builder\NoteSpaceStatus.cs" />
     <Compile Include="Builder\Range.cs" />
     <Compile Include="Patterns\AtomicSoundPattern.cs" />
-    <Compile Include="Patterns\Note.cs" />
     <Compile Include="Builder\Octave.cs" />
     <Compile Include="Patterns\NoteSpace.cs" />
     <Compile Include="Program.cs" />

@@ -2,45 +2,23 @@
 
 namespace MusicGenerator.Patterns
 {
-    class AtomicSoundPattern : SoundPatternBase
+    class AtomicSoundPattern 
     {
-
-        private int _countOfNotes;
-        private Note[] _notes;
-        private int _position;
-
-        /// <summary>
-        /// Время начала проигрывания ноты относительно начала проигрывания звукового паттерна
-        /// </summary>
-        private uint[] _timesOfInitialPlayingOfNotes;
+        public byte NumberOfOctave;
+        public UInt16 PlayingTime;
+        public NoteSpace[] NoteSpaces;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="countOfNotes">Количество нот, образующих паттерн</param>
+        /// <param name="numberOfOctave">Номер октавы</param>
         /// <param name="playingTime">Время проигрывания паттерна</param>
-        public AtomicSoundPattern(int countOfNotes, UInt16 playingTime)
-            : base(playingTime)
+        public AtomicSoundPattern(byte numberOfOctave, UInt16 playingTime)
         {
-            _countOfNotes = countOfNotes;
-            _notes = new Note[countOfNotes];
-            _timesOfInitialPlayingOfNotes = new uint[countOfNotes];
+            NumberOfOctave = numberOfOctave;
+            PlayingTime = playingTime;
+            NoteSpaces = new NoteSpace[NumberOfOctave];
         }
 
-        void ValidateData(Note note, UInt16 timeOfInitialPlayingOfNote)
-        {
-            if (_notes.Length > _countOfNotes)
-                throw new Exception(string.Format("Нот не может быть больше {0}.",_countOfNotes));
-            if(timeOfInitialPlayingOfNote+note.PlayingTime -1 >PlayingTime)
-                throw new Exception("Временной интервал проигрывания ноты превышает интервал проигрывания паттерна.");
-        }
-
-        public void AddNote(Note note, UInt16 timeOfInitialPlayingOfNote)
-        {
-            ValidateData(note, timeOfInitialPlayingOfNote);
-            _notes[_position] = note;
-            _timesOfInitialPlayingOfNotes[_position] = timeOfInitialPlayingOfNote;
-            _position++;
-        }
     }
 }
