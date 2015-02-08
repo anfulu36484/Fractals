@@ -16,6 +16,7 @@ namespace Fractals.Model
         private DataDistributor _dataVisualizer;
         private DataDistributor _statistics;
         private DataDistributor _dataBDSaver;
+        private DataOpenTKVisualizer _dataOpenTkVisualizer;
 
         private Random _random;
 
@@ -32,7 +33,7 @@ namespace Fractals.Model
         }
 
 
-        public FractalModel(MainWindow mainWindow)
+        public FractalModel(MainWindow mainWindow, DataOpenTKVisualizer dataOpenTkVisualizer)
         {
             _random = new Random();
             _fractalPopulation = new FractalPopulation(this);
@@ -40,6 +41,11 @@ namespace Fractals.Model
             _statistics = new Statistics(_fractalPopulation, mainWindow);
             _dataVisualizer = new DataVisualizer(mainWindow);
             _dataBDSaver = new DataBDSaver();
+
+
+
+            _dataOpenTkVisualizer = dataOpenTkVisualizer;
+            
         }
 
     
@@ -56,7 +62,8 @@ namespace Fractals.Model
             FieldGenerator.Generate(getResult);*/
 
             GetResult getResult = _statistics.GetData;
-            getResult += _dataBDSaver.GetData;
+            getResult += _dataOpenTkVisualizer.GetData;
+            //getResult += _dataBDSaver.GetData;
             FieldGenerator.Generate(getResult);
         }
 

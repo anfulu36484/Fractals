@@ -29,6 +29,7 @@
  *                  k = 1+ z/zmax
  * */
 
+#define DEBUG
 
 using System;
 using System.Diagnostics;
@@ -88,6 +89,8 @@ namespace Fractals.Model.DrawFractal
                 }
             }
 
+#if (DEBUG)
+
             Debug.WriteLine("K array");
             for (int i = 0; i < k_array.GetLength(0); i++)
             {
@@ -97,6 +100,8 @@ namespace Fractals.Model.DrawFractal
                 }
                 Debug.WriteLine("");
             }
+
+#endif
         }
 
 

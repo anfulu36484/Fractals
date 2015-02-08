@@ -20,6 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Fractals.DataCollector;
 
 namespace Fractals
 {
@@ -36,7 +37,13 @@ namespace Fractals
         public MainWindow()
         {
             InitializeComponent();
-            _fractalModel = new Model.FractalModel(this);
+
+            DataOpenTKVisualizer dataOpenTkVisualizer = new DataOpenTKVisualizer(this, _fractalModel);
+
+            
+            
+            dataOpenTkVisualizer.Run(30);
+            
         }
 
 

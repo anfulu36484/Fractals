@@ -58,7 +58,7 @@ namespace Fractals.Model
         public void AddAndRemoveFractalsFromCollection()
         {
             //удаление мертвых фракталов
-            _fractals = _fractals/*.Where(fractal => fractal.StateOfFractal != StateOfFractal.Dead)*/
+            _fractals = _fractals.Where(fractal => fractal.StateOfFractal != StateOfFractal.Dead)
                                  .Concat(_tempFractalsCollection)
                                  .ToList();
             _tempFractalsCollection = new List<Fractal>();

@@ -13,7 +13,7 @@ namespace Fractals
 
         public Controller(MainWindow mainWindow)
         {
-            FractalModel = new FractalModel(mainWindow);
+            //FractalModel = new FractalModel(mainWindow);
         }
 
         public void Start()
